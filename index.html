@@ -5,6 +5,13 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#030303" />
+    <script>
+      try {
+        const theme = localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#fbf5e7' : '#030303';
+      } catch { /* Default to dark when storage is unavailable. */ }
+    </script>
     <meta name="description" content="Mentis Forge — Neuroscience and Esoteric Psychology." />
     <title>Mentis Forge</title>
   </head>
