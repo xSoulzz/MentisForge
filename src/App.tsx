@@ -50,7 +50,7 @@ function App() {
   const navigation = <>
     <a className="nav-link" href="#topics" onClick={() => setMenuOpen(false)}>Topics</a>
     <a className="nav-link" href="#questions" onClick={() => setMenuOpen(false)}>Questions</a>
-    <button onClick={() => showTopic('About')}>About</button>
+    <a className="nav-link" href="#about" onClick={() => setMenuOpen(false)}>About</a>
     <a className="community-link" href="https://discord.com/" target="_blank" rel="noreferrer">Join Discord</a>
   </>
   return <div className="landing-shell">
@@ -137,6 +137,46 @@ function App() {
               <span className="watch-copy"><span className="watch-title">{video.title}</span><span className="watch-description">{video.description}</span><span className="watch-status">Video coming soon</span></span>
             </button>
           </article>)}
+        </div>
+      </section>
+      <section id="approach" className="study-section" aria-labelledby="study-heading">
+        <h2 id="study-heading">How we study</h2>
+        <div className="study-grid">
+          <article className="study-pillar">
+            <svg className="study-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="m31 9 8-5 14 21-8 5ZM28 12l-5 4 9 14 5-4M34 31l-4 3M18 38h24M26 42h14M44 29c13 8 8 25-7 25H20M26 54v5M14 59h38"/><path d="M26 29c-12 1-15 14-8 21M38 10l5-3"/><circle cx="44" cy="35" r="3"/></svg>
+            <h3>Research</h3>
+            <p>Start with evidence. Ask how a finding was studied and what its limits are.</p>
+          </article>
+          <article className="study-pillar">
+            <svg className="study-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 15C24 9 14 8 6 11v39c9-3 18-2 26 4 8-6 17-7 26-4V11c-8-3-18-2-26 4Zm0 0v39M11 15v30c7-1 13 0 17 3M53 15v30c-7-1-13 0-17 3"/></svg>
+            <h3>Interpretation</h3>
+            <p>Explore meaning with care. Distinguish evidence from perspective and tradition.</p>
+          </article>
+          <article className="study-pillar">
+            <svg className="study-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 57V33M32 42C32 20 44 10 58 10c0 16-8 28-26 28M32 33C30 14 19 8 6 10c0 15 9 25 26 23M32 38l17-19M31 33 15 18"/></svg>
+            <h3>Practice</h3>
+            <p>Bring ideas into daily life. Observe, reflect, and adjust with curiosity.</p>
+          </article>
+        </div>
+      </section>
+      <section id="about" className="about-section" aria-labelledby="about-heading">
+        <h2 id="about-heading">Who we are</h2>
+        <div className="about-grid">
+          <p className="about-introduction">We're building a space to study neuroscience, psychology, and contemplative traditions with curiosity and care.</p>
+          {['Noa', 'Brandon'].map(name => <article className="person-card" key={name} aria-labelledby={`person-${name.toLowerCase()}`}>
+            <div className="portrait-placeholder" role="img" aria-label={`Portrait placeholder for ${name}`}>
+              <svg viewBox="0 0 80 88" fill="currentColor" aria-hidden="true"><path d="M40 9c-13 0-20 9-20 23 0 10 4 18 10 22v8C15 65 8 72 8 84h64c0-12-7-19-22-22v-8c6-4 10-12 10-22C60 18 53 9 40 9Z"/></svg>
+              <span aria-hidden="true">Portrait<br/>placeholder</span>
+            </div>
+            <h3 id={`person-${name.toLowerCase()}`}>{name}</h3>
+          </article>)}
+        </div>
+        <div className="about-community">
+          <p>Join the community for deeper inquiry, shared practice, and ongoing conversation.</p>
+          <nav aria-label="Join the Mentis Forge community">
+            <a href="https://discord.com/" target="_blank" rel="noreferrer">Discord <span aria-hidden="true">&#8599;</span></a>
+            <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span aria-hidden="true">&#8599;</span></a>
+          </nav>
         </div>
       </section>
     </main>
