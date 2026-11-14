@@ -4,7 +4,8 @@ import './Article.css'
 // The supplied article uses paragraphs, headings, emphasis and strong emphasis.
 // Render those as React nodes; raw HTML is never executed.
 function InlineText({ text }: { text: string }) {
-  return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).map((part, index) => {
+  return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*| {2,}\n)/g).map((part, index) => {
+    if (/^ {2,}\n$/.test(part)) return <br key={index}/>
     if (part.startsWith('**')) return <strong key={index}>{part.slice(2, -2)}</strong>
     if (part.startsWith('*')) return <em key={index}>{part.slice(1, -1)}</em>
     return <Fragment key={index}>{part}</Fragment>
@@ -37,6 +38,8 @@ export default function Article({ text, category }: { text: string; category: st
       <div className="article-prose">
         {blocks.map((block, index) => block.startsWith('## ')
           ? <h2 id={`section-${index}`} key={index}>{block.slice(3)}</h2>
+          : block.startsWith('### ')
+          ? <h3 key={index}>{block.slice(4)}</h3>
           : block.startsWith('- ')
           ? <ul key={index}>{block.split('\n').map((item, itemIndex) => <li key={itemIndex}><InlineText text={item.replace(/^- /, '')}/></li>)}</ul>
           : <p key={index}><InlineText text={block}/></p>)}
