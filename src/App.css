@@ -346,3 +346,99 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
 @media (pointer: coarse) and (min-width: 901px) {
   .footer-column a, .footer-column button { min-height: 44px; display: flex; align-items: center; }
 }
+/* Whole-page reference alignment: shared editorial scale and compact desktop rhythm. */
+.landing-shell { max-width: 1200px; background: radial-gradient(ellipse at 65% 15%, #26302b22, transparent 60%), var(--surface); }
+.hero-art img { aspect-ratio: 1619 / 971; object-fit: contain; }
+@media (min-width: 901px) {
+  .landing-shell { padding-inline: 30px; }
+  .hero { grid-template-columns: .96fr 1.04fr; gap: 0; min-height: 296px; padding: 10px 4px 14px 24px; margin-bottom: 0; }
+  .hero-copy { padding-block: 12px; }
+  .hero h1 { font-size: clamp(44px, 4.7vw, 56px); line-height: .96; letter-spacing: -.035em; }
+  .hero-description { font-size: 22px; line-height: 1.15; margin-top: 14px; }
+  .hero-cta { font-size: 19px; min-height: 36px; }
+  .hero-art { width: 108%; margin-left: -6%; }
+  .topics-section h2, .questions-section h2, .reading-section h2,
+  .watch-section h2, .study-section h2, .about-section h2 { font-size: 32px; line-height: 1; letter-spacing: -.025em; }
+  .topics-section { padding: 4px 4px 16px; }
+  .topic-grid { margin-top: 10px; }
+  .topic-card { padding-inline: 26px; }
+  .topic-card h3 button { font-size: 21px; line-height: 1.05; min-height: 25px; white-space: nowrap; }
+  .topic-card p { font-size: 13px; line-height: 1.25; margin-top: 4px; }
+  .questions-section { padding: 5px 24px 0; margin-inline: -16px; }
+  .section-intro { margin: 3px 0 5px 24px; font-size: 18px; line-height: 1.2; }
+  .faq-item summary { grid-template-columns: 21% 1fr 24px; gap: 24px; padding: 4px 12px; }
+  .faq-question { font-size: 21px; line-height: 1.1; }
+  .faq-item .category-label { padding-block: 1px; font-size: 12px; }
+  .faq-answer { margin-left: calc(21% + 30px); padding-bottom: 6px; }
+  .faq-answer p { font-size: 14px; line-height: 1.25; }
+  .text-link { font-size: 17px; min-height: 26px; padding-block: 2px; }
+  .reading-section { padding: 4px 4px 6px; }
+  .reading-list { margin-top: 2px; }
+  .reading-item summary { grid-template-columns: 21% 1fr auto; gap: 24px; padding: 3px 8px; }
+  .reading-title { font-size: 19px; line-height: 1; }
+  .reading-summary { font-size: 12px; line-height: 1.1; }
+  .reading-time { font-size: 10px; }
+  .reading-time span { display: none; }
+  .reading-body { margin-left: calc(21% + 24px); }
+  .inner-library { min-height: 100px; margin: 0 -30px 0; border: 0; }
+  .library-artwork { object-fit: cover; object-position: center 65%; }
+  .library-content { padding: 12px 16px; }
+  .inner-library h2 { font-size: 21px; letter-spacing: .28em; margin-bottom: 4px; }
+  .library-paths { gap: 42px; }
+  .library-paths button { font-size: 18px; min-height: 32px; padding-block: 3px; }
+  .library-paths button + button::before { left: -32px; }
+  .watch-section { padding: 4px 4px 12px; margin-bottom: 0; }
+  .watch-section h2 { margin-bottom: 8px; }
+  .watch-grid { gap: 24px; }
+  .watch-card + .watch-card { padding-left: 24px; }
+  .watch-trigger { grid-template-columns: 1.15fr 1fr; gap: 16px; align-items: start; }
+  .watch-thumbnail { aspect-ratio: auto; height: 84px; border-radius: 7px; }
+  .watch-title { font-size: 19px; line-height: 1; }
+  .watch-description { font-size: 12px; line-height: 1.15; }
+  .watch-copy { gap: 3px; }
+  .watch-status { font-size: 8px; letter-spacing: .08em; margin-top: 1px; }
+  .play-icon { width: 36px; height: 36px; }
+  .play-icon svg { width: 21px; height: 21px; }
+  .study-section { padding: 3px 4px 8px; margin-bottom: 0; }
+  .study-section h2 { margin-bottom: 0; font-size: 29px; }
+  .study-grid { padding-bottom: 0; }
+  .study-icon { width: 34px; height: 30px; }
+  .study-pillar h3 { margin: 0; font-size: 12px; line-height: 1.25; }
+  .study-description { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .about-section { padding: 4px 4px 6px; margin-bottom: 20px; }
+  .about-section h2 { margin-bottom: 0; }
+  .about-grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 28px; margin-top: 0; }
+  .about-introduction { font-size: 14px; line-height: 1.3; padding-top: 5px; }
+  .person-card { gap: 14px; padding-left: 28px; }
+  .portrait-placeholder { width: 86px; height: 82px; border-radius: 9px; }
+  .portrait-placeholder svg { width: 48px; height: 54px; }
+  .portrait-placeholder span { font-size: 6px; }
+  .person-card h3 { font-size: 23px; }
+  .about-community { margin-top: 8px; }
+  .about-community p { font-size: 15px; line-height: 1.3; }
+  .about-community nav { margin-top: 0; }
+  .about-community a { font-size: 17px; padding-block: 4px; min-height: 28px; }
+  .about-community a + a::before { inset-block: 7px; }
+  .site-footer { padding-bottom: 38px; }
+}
+@media (min-width: 901px) and (max-width: 1000px) {
+  .topic-card { padding-inline: 18px; }
+  .topic-card h3 button { font-size: 18px; }
+  .footer-column { padding-inline: 14px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (min-width: 901px) {
+  .hero-art { height: 270px; }
+  .hero-art img { height: 100%; width: 100%; }
+  .hero { min-height: 296px; }
+  .faq-item summary { padding-block: 3px; }
+  .faq-answer { padding-bottom: 4px; }
+  .questions-section .section-intro { margin-bottom: 3px; }
+  .reading-item summary { padding-block: 2px; }
+  .study-section { padding-bottom: 5px; }
+  .study-icon { height: 26px; }
+  .about-section { padding-bottom: 4px; margin-bottom: 18px; }
+  .inner-library::before { content: ''; position: absolute; z-index: -1; inset: -62px 23% 0; border: 7px double #a88e5f99; border-bottom: 0; border-radius: 50% 50% 0 0; box-shadow: 0 0 0 2px #d4bc811c, inset 0 0 0 2px #d4bc8126; pointer-events: none; }
+}

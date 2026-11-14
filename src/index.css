@@ -1,4 +1,6 @@
-﻿:root{font-family:Georgia,'Times New Roman',serif;color:#edce7d;background:#030303;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;--surface:#030303;--gold:#edce7d;--edge:#b58b37;--gradient:linear-gradient(115deg,#b58b37,#ffe6a0 27%,#d6a64b 52%,#f9dc8e 78%,#b58b37);color-scheme:dark}
+﻿:root{font-family:Georgia,'Times New Roman',serif;color:#edce7d;background:#121615;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;--surface:#121615;--gold:#edce7d;--edge:#b58b37;--gradient:linear-gradient(115deg,#b58b37,#ffe6a0 27%,#d6a64b 52%,#f9dc8e 78%,#b58b37);color-scheme:dark}
 :root[data-theme='light']{--surface:#fbf5e7;--gold:#735016;--edge:#967023;--gradient:linear-gradient(115deg,#795011,#ad7d25 40%,#715019 75%,#967023);background:#fbf5e7;color:#735016;color-scheme:light}
 *{box-sizing:border-box}body{margin:0;min-width:320px;min-height:100svh}button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}button{font:inherit;color:inherit;cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:5px}#root{padding:24px}
 @media(max-width:767px){#root{padding:12px 8px}}
+
+body{background:radial-gradient(ellipse at 50% 15%,#35403918,transparent 65%)}
