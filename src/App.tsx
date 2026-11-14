@@ -56,7 +56,7 @@ function App() {
     <a className="nav-link" href="#topics" onClick={() => setMenuOpen(false)}>Topics</a>
     <a className="nav-link" href="#questions" onClick={() => setMenuOpen(false)}>Questions</a>
     <a className="nav-link" href="#about" onClick={() => setMenuOpen(false)}>About</a>
-    <a className="community-link" href="https://discord.com/" target="_blank" rel="noreferrer">Join Discord</a>
+    <a className="community-link" href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Join Discord</a>
   </>
   return <div className="landing-shell">
     <header className="site-header">
@@ -179,7 +179,7 @@ function App() {
         <div className="about-community">
           <p>Join the community for deeper inquiry, shared practice, and ongoing conversation.</p>
           <nav aria-label="Join the Mentis Forge community">
-            <a href="https://discord.com/" target="_blank" rel="noreferrer">Discord <span aria-hidden="true">&#8599;</span></a>
+            <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Discord <span aria-hidden="true">&#8599;</span></a>
             <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span aria-hidden="true">&#8599;</span></a>
           </nav>
         </div>
@@ -196,7 +196,7 @@ function App() {
       </nav>
       <nav className="footer-column" aria-labelledby="footer-community">
         <h2 id="footer-community">Community</h2>
-        <a href="https://discord.com/" target="_blank" rel="noreferrer">Discord <span className="sr-only">(opens in a new tab)</span></a>
+        <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Discord <span className="sr-only">(opens in a new tab)</span></a>
         <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span className="sr-only">(opens in a new tab)</span></a>
         <a href="#library">The Inner Library</a>
       </nav>
