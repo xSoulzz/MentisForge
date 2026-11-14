@@ -1,13 +1,5 @@
-﻿import { Fragment } from 'react'
-import articleText from '../content/neuroplasticity.md?raw'
+import { Fragment } from 'react'
 import './Article.css'
-
-const blocks = articleText.trim().split(/\r?\n\s*\r?\n/)
-const titleLines = blocks.shift()!.split(/\r?\n/)
-const title = titleLines[0].replace(/^# /, '')
-const subtitle = titleLines[1].replace(/^### /, '')
-const readingMinutes = Math.ceil(articleText.split(/\s+/).length / 220)
-const sections = blocks.flatMap((block, index) => block.startsWith('## ') ? [{ title: block.slice(3), id: `section-${index}` }] : [])
 
 // The supplied article uses paragraphs, headings, emphasis and strong emphasis.
 // Render those as React nodes; raw HTML is never executed.
@@ -19,11 +11,18 @@ function InlineText({ text }: { text: string }) {
   })
 }
 
-export default function Article() {
+export default function Article({ text, category }: { text: string; category: string }) {
+  const lines = text.trim().split(/\r?\n/)
+  const title = lines.shift()!.replace(/^# /, '')
+  while (lines[0]?.trim() === '') lines.shift()
+  const subtitle = lines.shift()!.replace(/^### /, '')
+  const blocks = lines.join('\n').trim().split(/\n\s*\n/)
+  const readingMinutes = Math.ceil(text.split(/\s+/).length / 220)
+  const sections = blocks.flatMap((block, index) => block.startsWith('## ') ? [{ title: block.slice(3), id: `section-${index}` }] : [])
   return <article className="article-page" aria-labelledby="article-title">
     <a className="article-back" href="/#topics"><span aria-hidden="true">&larr;</span> Back to homepage</a>
     <header className="article-heading">
-      <p className="article-kicker">Explore topics <span aria-hidden="true">/</span> Neuroplasticity</p>
+      <p className="article-kicker">Explore topics <span aria-hidden="true">/</span> {category}</p>
       <h1 id="article-title">{title}</h1>
       <p className="article-subtitle">{subtitle}</p>
       <p className="article-meta">Mentis Forge <span aria-hidden="true">&middot;</span> {readingMinutes} min read</p>
@@ -38,6 +37,8 @@ export default function Article() {
       <div className="article-prose">
         {blocks.map((block, index) => block.startsWith('## ')
           ? <h2 id={`section-${index}`} key={index}>{block.slice(3)}</h2>
+          : block.startsWith('- ')
+          ? <ul key={index}>{block.split('\n').map((item, itemIndex) => <li key={itemIndex}><InlineText text={item.replace(/^- /, '')}/></li>)}</ul>
           : <p key={index}><InlineText text={block}/></p>)}
         <div className="article-end"><span>Continue exploring</span><a className="article-back" href="/#topics"><span aria-hidden="true">&larr;</span> Back to homepage</a></div>
       </div>

@@ -1,4 +1,4 @@
-﻿import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { fileURLToPath } from 'node:url'
 
@@ -8,6 +8,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         home: fileURLToPath(new URL('./index.html', import.meta.url)),
+        attentionLearning: fileURLToPath(new URL('./topics/attention-learning/index.html', import.meta.url)),
         neuroplasticity: fileURLToPath(new URL('./topics/neuroplasticity/index.html', import.meta.url)),
       },
     },

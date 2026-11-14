@@ -4,10 +4,17 @@ import libraryArtwork from './assets/inner-library-detailed.png'
 import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
 import reflectionVideoArtwork from './assets/watch-reflection.png'
 import Article from './pages/Article'
+import neuroplasticityText from './content/neuroplasticity.md?raw'
+import attentionText from './content/attention-learning.md?raw'
 import './App.css'
 
-const articlePath = '/topics/neuroplasticity/'
-const isArticle = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') === articlePath.slice(0, -1)
+const articleRoutes = {
+  Neuroplasticity: { path: '/topics/neuroplasticity/', category: 'Neuroplasticity', text: neuroplasticityText },
+  Attention: { path: '/topics/attention-learning/', category: 'Attention & Learning', text: attentionText },
+}
+const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '')
+const currentArticle = Object.values(articleRoutes).find(article => article.path.slice(0, -1) === currentPath)
+const isArticle = Boolean(currentArticle)
 
 const information = {
   Contact: { title: 'Contact', text: 'Contact details are not available yet. Please check back for a direct way to reach Mentis Forge.' },
@@ -74,7 +81,7 @@ function App() {
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
     </header>
     <main>
-      {isArticle ? <Article/> : <>
+      {currentArticle ? <Article text={currentArticle.text} category={currentArticle.category}/> : <>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
           <h1 id="hero-heading">Study the mind.<br/>Explore meaning.<br/>Practice change.</h1>
@@ -92,7 +99,7 @@ function App() {
             ['Meaning', 'Self & Meaning', 'The neuroscience and psychology of identity, values, and meaning.'],
             ['Body', 'Body & Vitality', 'How sleep, movement, nutrition, and stress shape brain function.'],
           ] as const).map(([key, title, description]) => <article className="topic-card" key={key}>
-            <h3>{key === 'Neuroplasticity' ? <a href={articlePath}>{title}</a> : <button onClick={() => showTopic(key)}>{title}</button>}</h3>
+            <h3>{(key === 'Neuroplasticity' || key === 'Attention') ? <a href={articleRoutes[key].path}>{title}</a> : <button onClick={() => showTopic(key)}>{title}</button>}</h3>
             <p>{description}</p>
           </article>)}
         </div>
@@ -107,7 +114,7 @@ function App() {
             ['Attention', 'Attention', 'Can focused attention change what we learn?', 'Attention helps determine which information we process and practice. Reducing competing demands can support learning, while breaks and returning to material give us opportunities to revisit it.'],
           ] as const).map(([key, category, question, answer], index) => <details className="faq-item" name="common-questions" key={question} open={index === 0}>
             <summary><span className="category-label">{category}</span><span className="faq-question">{question}</span><span className="faq-symbol" aria-hidden="true"/></summary>
-            <div className="faq-answer"><p>{answer}</p>{key === 'Neuroplasticity' ? <a className="text-link" href={articlePath}>Explore the topic <span aria-hidden="true">&rarr;</span></a> : <button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button>}</div>
+            <div className="faq-answer"><p>{answer}</p>{(key === 'Neuroplasticity' || key === 'Attention') ? <a className="text-link" href={articleRoutes[key].path}>Explore the topic <span aria-hidden="true">&rarr;</span></a> : <button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button>}</div>
           </details>)}
         </div>
       </section>

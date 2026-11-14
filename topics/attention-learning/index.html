@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-page="article">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#091c1b" />
+    <script>
+      try {
+        const theme = localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#fbf5e7' : '#091c1b';
+      } catch { /* Default to dark when storage is unavailable. */ }
+    </script>
+    <meta name="description" content="How the brain selects, sustains, and updates information. An exploration of attention and conscious learning from Mentis Forge." />
+    <title>Attention &amp; Learning | Mentis Forge</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

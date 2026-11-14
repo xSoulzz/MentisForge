@@ -44,3 +44,8 @@
   .article-prose h2 { font-size: 27px; margin-top: 36px; }
   .article-contents nav { grid-template-columns: 1fr; }
 }
+
+.article-prose ul { margin: 0 0 28px; padding-left: 26px; color: var(--ink); font: 19px/1.8 Georgia, serif; }
+.article-prose li { padding-left: 6px; margin-bottom: 8px; }
+.article-prose li::marker { color: var(--gold); }
+@media (max-width: 540px) { .article-prose ul { font-size: 18px; } }
