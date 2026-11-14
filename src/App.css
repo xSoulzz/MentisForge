@@ -108,8 +108,8 @@
 .topic-card { padding: 0 28px; border-left: 1px solid var(--gold); }
 .topic-card:first-child { border-left: 0; }
 .topic-card h3 { margin: 0; font-weight: 400; }
-.topic-card h3 button { border: 0; padding: 0; background: none; text-align: left; color: var(--link); font: 23px/1.2 Georgia, serif; min-height: 44px; }
-.topic-card h3 button:hover { text-decoration: underline; text-underline-offset: 5px; }
+.topic-card h3 :is(button, a) { border: 0; padding: 0; background: none; text-align: left; color: var(--link); font: 23px/1.2 Georgia, serif; min-height: 44px; }
+.topic-card h3 :is(button, a):hover { text-decoration: underline; text-underline-offset: 5px; }
 .topic-card p { margin: 5px 0 0; max-width: 240px; font: 14px/1.35 Arial, sans-serif; color: var(--ink); }
 .questions-section { position: relative; padding: 10px 30px 0; margin-inline: -16px; border-radius: 18px; background: linear-gradient(115deg, #0b2927, #091c1b); }
 .questions-section::before { content: ''; position: absolute; top: 0; inset-inline: 20px; height: 1px; background: var(--gold); }
@@ -147,7 +147,7 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
 @media (max-width: 1100px) {
   .nav-link { font-size: 16px; }
   .topic-card { padding-inline: 20px; }
-  .topic-card h3 button { font-size: 20px; }
+  .topic-card h3 :is(button, a) { font-size: 20px; }
   .faq-question { font-size: 21px; }
   .reading-title { font-size: 19px; }
 }
@@ -164,7 +164,7 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
   .topics-section { padding-inline: 4px; }
   .topic-card { padding-inline: 12px; }
   .topic-card:nth-child(odd) { padding-left: 0; }
-  .topic-card h3 button { font-size: 19px; }
+  .topic-card h3 :is(button, a) { font-size: 19px; }
   .topic-card p { font-size: 13px; }
   .questions-section { margin-inline: -8px; padding: 14px 14px 0; border-radius: 12px; }
   .section-intro { margin: 6px 0 14px; font-size: 17px; }
@@ -362,7 +362,7 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
   .topics-section { padding: 4px 4px 16px; }
   .topic-grid { margin-top: 10px; }
   .topic-card { padding-inline: 26px; }
-  .topic-card h3 button { font-size: 21px; line-height: 1.05; min-height: 25px; white-space: nowrap; }
+  .topic-card h3 :is(button, a) { font-size: 21px; line-height: 1.05; min-height: 25px; white-space: nowrap; }
   .topic-card p { font-size: 13px; line-height: 1.25; margin-top: 4px; }
   .questions-section { padding: 5px 24px 0; margin-inline: -16px; }
   .section-intro { margin: 3px 0 5px 24px; font-size: 18px; line-height: 1.2; }
@@ -423,7 +423,7 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
 }
 @media (min-width: 901px) and (max-width: 1000px) {
   .topic-card { padding-inline: 18px; }
-  .topic-card h3 button { font-size: 18px; }
+  .topic-card h3 :is(button, a) { font-size: 18px; }
   .footer-column { padding-inline: 14px; }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -442,3 +442,6 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
   .about-section { padding-bottom: 4px; margin-bottom: 18px; }
   .inner-library::before { content: ''; position: absolute; z-index: -1; inset: -62px 23% 0; border: 7px double #a88e5f99; border-bottom: 0; border-radius: 50% 50% 0 0; box-shadow: 0 0 0 2px #d4bc811c, inset 0 0 0 2px #d4bc8126; pointer-events: none; }
 }
+
+.topic-card h3 a { display: inline-flex; align-items: center; }
+a.text-link { display: inline-flex; align-items: center; gap: 5px; }

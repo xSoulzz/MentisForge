@@ -3,7 +3,11 @@ import heroArtwork from './assets/mentis-hero-v2.png'
 import libraryArtwork from './assets/inner-library-detailed.png'
 import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
 import reflectionVideoArtwork from './assets/watch-reflection.png'
+import Article from './pages/Article'
 import './App.css'
+
+const articlePath = '/topics/neuroplasticity/'
+const isArticle = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') === articlePath.slice(0, -1)
 
 const information = {
   Contact: { title: 'Contact', text: 'Contact details are not available yet. Please check back for a direct way to reach Mentis Forge.' },
@@ -38,7 +42,8 @@ function App() {
   const menuButton = useRef<HTMLButtonElement>(null)
   useEffect(() => {
     document.documentElement.dataset.theme = theme
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#fbf5e7' : '#121615')
+    document.documentElement.dataset.page = isArticle ? 'article' : 'home'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#fbf5e7' : isArticle ? '#091c1b' : '#121615')
     try { localStorage.setItem('mentis-theme', theme) } catch { /* Optional storage. */ }
   }, [theme])
   useEffect(() => {
@@ -53,12 +58,12 @@ function App() {
     dialog.current?.showModal()
   }
   const navigation = <>
-    <a className="nav-link" href="#topics" onClick={() => setMenuOpen(false)}>Topics</a>
-    <a className="nav-link" href="#questions" onClick={() => setMenuOpen(false)}>Questions</a>
-    <a className="nav-link" href="#about" onClick={() => setMenuOpen(false)}>About</a>
+    <a className="nav-link" href="/#topics" onClick={() => setMenuOpen(false)}>Topics</a>
+    <a className="nav-link" href="/#questions" onClick={() => setMenuOpen(false)}>Questions</a>
+    <a className="nav-link" href="/#about" onClick={() => setMenuOpen(false)}>About</a>
     <a className="community-link" href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Join Discord</a>
   </>
-  return <div className="landing-shell">
+  return <div className={`landing-shell${isArticle ? ' article-shell' : ''}`}>
     <header className="site-header">
       <div className="header-content">
         <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">Neuroscience + Psychology</span></span></a>
@@ -69,11 +74,12 @@ function App() {
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
     </header>
     <main>
+      {isArticle ? <Article/> : <>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
           <h1 id="hero-heading">Study the mind.<br/>Explore meaning.<br/>Practice change.</h1>
           <p className="hero-description">Neuroscience, psychology, and contemplative traditions for a more intentional life.</p>
-          <a className="hero-cta" href="#topics">Learn more <span aria-hidden="true">&rarr;</span></a>
+          <a className="hero-cta" href="/#topics">Learn more <span aria-hidden="true">&rarr;</span></a>
         </div>
         <div className="hero-art"><img src={heroArtwork} width="1619" height="971" fetchPriority="high" alt="Ivory anatomical brain beneath a classical gold arch, with branching golden neurons on either side."/></div>
       </section>
@@ -86,7 +92,7 @@ function App() {
             ['Meaning', 'Self & Meaning', 'The neuroscience and psychology of identity, values, and meaning.'],
             ['Body', 'Body & Vitality', 'How sleep, movement, nutrition, and stress shape brain function.'],
           ] as const).map(([key, title, description]) => <article className="topic-card" key={key}>
-            <h3><button onClick={() => showTopic(key)}>{title}</button></h3>
+            <h3>{key === 'Neuroplasticity' ? <a href={articlePath}>{title}</a> : <button onClick={() => showTopic(key)}>{title}</button>}</h3>
             <p>{description}</p>
           </article>)}
         </div>
@@ -101,7 +107,7 @@ function App() {
             ['Attention', 'Attention', 'Can focused attention change what we learn?', 'Attention helps determine which information we process and practice. Reducing competing demands can support learning, while breaks and returning to material give us opportunities to revisit it.'],
           ] as const).map(([key, category, question, answer], index) => <details className="faq-item" name="common-questions" key={question} open={index === 0}>
             <summary><span className="category-label">{category}</span><span className="faq-question">{question}</span><span className="faq-symbol" aria-hidden="true"/></summary>
-            <div className="faq-answer"><p>{answer}</p><button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button></div>
+            <div className="faq-answer"><p>{answer}</p>{key === 'Neuroplasticity' ? <a className="text-link" href={articlePath}>Explore the topic <span aria-hidden="true">&rarr;</span></a> : <button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button>}</div>
           </details>)}
         </div>
       </section>
@@ -184,21 +190,22 @@ function App() {
           </nav>
         </div>
       </section>
+      </>}
     </main>
     <footer className="site-footer" aria-label="Site footer">
       <a className="brand footer-brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">Neuroscience + Psychology</span></span></a>
       <nav className="footer-column" aria-labelledby="footer-explore">
         <h2 id="footer-explore">Explore</h2>
-        <a href="#topics">Topics</a>
-        <a href="#questions">Common questions</a>
-        <a href="#reading">Latest reading</a>
-        <a href="#about">Who we are</a>
+        <a href="/#topics">Topics</a>
+        <a href="/#questions">Common questions</a>
+        <a href="/#reading">Latest reading</a>
+        <a href="/#about">Who we are</a>
       </nav>
       <nav className="footer-column" aria-labelledby="footer-community">
         <h2 id="footer-community">Community</h2>
         <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Discord <span className="sr-only">(opens in a new tab)</span></a>
         <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span className="sr-only">(opens in a new tab)</span></a>
-        <a href="#library">The Inner Library</a>
+        <a href="/#library">The Inner Library</a>
       </nav>
       <nav className="footer-column" aria-labelledby="footer-information">
         <h2 id="footer-information">Information</h2>
