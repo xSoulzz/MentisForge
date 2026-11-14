@@ -1,10 +1,12 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import heroArtwork from './assets/mentis-hero-v2.png'
 import './App.css'
 
 const information = {
-  Topics: { title: 'Explore the mind', text: 'Neuroscience, psychology, and contemplative traditions. Explore how we learn, what shapes attention, and how we make meaning.' },
-  Questions: { title: 'A curious place to begin', text: 'What changes when we learn? How do habits form? How can attention be practiced? These are the questions that guide our exploration.' },
+  Neuroplasticity: { title: 'Neuroplasticity', text: 'Explore how experience and practice shape the brain throughout life. Start with the reading on repetition below.' },
+  Attention: { title: 'Attention & Learning', text: 'Explore how the brain selects, sustains, and updates information. Start with the reading on attention below.' },
+  Meaning: { title: 'Self & Meaning', text: 'Explore the neuroscience and psychology of identity, values, and meaning. We approach contemplative traditions as perspectives to examine, alongside scientific inquiry.' },
+  Body: { title: 'Body & Vitality', text: 'Explore how sleep, movement, nutrition, and stress relate to brain function. Start with the reading on sleep below.' },
   About: { title: 'About Mentis Forge', text: 'A space to study neuroscience, psychology, and contemplative traditions with curiosity and care. Study the mind. Explore meaning. Practice change.' },
 }
 type Topic = keyof typeof information
@@ -38,7 +40,9 @@ function App() {
     dialog.current?.showModal()
   }
   const navigation = <>
-    {(Object.keys(information) as Topic[]).map(value => <button key={value} onClick={() => showTopic(value)}>{value}</button>)}
+    <a className="nav-link" href="#topics" onClick={() => setMenuOpen(false)}>Topics</a>
+    <a className="nav-link" href="#questions" onClick={() => setMenuOpen(false)}>Questions</a>
+    <button onClick={() => showTopic('About')}>About</button>
     <a className="community-link" href="https://discord.com/" target="_blank" rel="noreferrer">Join Discord</a>
   </>
   return <div className="landing-shell">
@@ -56,9 +60,50 @@ function App() {
         <div className="hero-copy">
           <h1 id="hero-heading">Study the mind.<br/>Explore meaning.<br/>Practice change.</h1>
           <p className="hero-description">Neuroscience, psychology, and contemplative traditions for a more intentional life.</p>
-          <button className="hero-cta" onClick={() => showTopic('About')}>Learn more <span aria-hidden="true">&rarr;</span></button>
+          <a className="hero-cta" href="#topics">Learn more <span aria-hidden="true">&rarr;</span></a>
         </div>
         <div className="hero-art"><img src={heroArtwork} width="1619" height="971" fetchPriority="high" alt="Ivory anatomical brain beneath a classical gold arch, with branching golden neurons on either side."/></div>
+      </section>
+      <section id="topics" className="topics-section" aria-labelledby="topics-heading">
+        <h2 id="topics-heading">Explore topics</h2>
+        <div className="topic-grid">
+          {([
+            ['Neuroplasticity', 'Neuroplasticity', 'How experience changes the brain.'],
+            ['Attention', 'Attention & Learning', 'How the brain selects, sustains, and updates information.'],
+            ['Meaning', 'Self & Meaning', 'The neuroscience and psychology of identity, values, and meaning.'],
+            ['Body', 'Body & Vitality', 'How sleep, movement, nutrition, and stress shape brain function.'],
+          ] as const).map(([key, title, description]) => <article className="topic-card" key={key}>
+            <h3><button onClick={() => showTopic(key)}>{title}</button></h3>
+            <p>{description}</p>
+          </article>)}
+        </div>
+      </section>
+      <section id="questions" className="questions-section" aria-labelledby="questions-heading">
+        <h2 id="questions-heading">Common questions</h2>
+        <p className="section-intro">Quick answers, grounded in research.</p>
+        <div className="faq-list">
+          {([
+            ['Neuroplasticity', 'Neuroplasticity', 'What does neuroplasticity mean in adulthood?', 'The brain continues to adapt through experience. Learning depends on practice, context, and time, not willpower alone.'],
+            ['Attention', 'Habits', 'How does the brain form a new habit?', 'Repeating a behavior in a familiar context can make it more automatic. The cues around us, the rewards that follow, and consistent repetition all play a part.'],
+            ['Attention', 'Attention', 'Can focused attention change what we learn?', 'Attention helps determine which information we process and practice. Reducing competing demands can support learning, while breaks and returning to material give us opportunities to revisit it.'],
+          ] as const).map(([key, category, question, answer], index) => <details className="faq-item" name="common-questions" key={question} open={index === 0}>
+            <summary><span className="category-label">{category}</span><span className="faq-question">{question}</span><span className="faq-symbol" aria-hidden="true"/></summary>
+            <div className="faq-answer"><p>{answer}</p><button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button></div>
+          </details>)}
+        </div>
+      </section>
+      <section id="reading" className="reading-section" aria-labelledby="reading-heading">
+        <h2 id="reading-heading">Latest reading</h2>
+        <div className="reading-list">
+          {[
+            { category: 'Neuroplasticity', title: 'What changes in the brain when we repeat a skill?', summary: 'Repeated practice strengthens neural circuits, making skills more efficient.', body: 'Learning a skill involves more than repeating a movement or remembering a fact. With practice, the networks involved in the task can become better coordinated. Progress depends on what we practice, the feedback we receive, and the conditions around learning. Repeating an error can reinforce it too. A useful starting point is to choose one small part of a skill, practice it with attention, and use feedback to adjust the next attempt.' },
+            { category: 'Attention', title: 'Why is attention easier to lose than regain?', summary: 'Focus is fragile; our attention systems are easily pulled by distraction.', body: 'Attention is selective. A sound, a notification, or an unfinished concern can draw us away from the task we intended to do. Returning means finding our place and rebuilding the context of that task. Try noticing what tends to interrupt you and making one practical change, such as silencing notifications during a short period of focused work. The aim is not perfect concentration, but an environment that makes returning easier.' },
+            { category: 'Sleep & Recovery', title: 'How does sleep support learning?', summary: 'Sleep helps the brain consolidate new memories and prepare for future learning.', body: 'Learning continues beyond the moment of practice. During sleep, the brain processes information from waking experience, helping some memories become more stable. Rest also supports our ability to pay attention when we return to learning. Instead of treating sleep as time taken away from study, consider it part of the learning process. Practice and recovery work together; neither is a shortcut that replaces the other.' },
+          ].map(article => <details className="reading-item" key={article.title}>
+            <summary><span className="category-label">{article.category}</span><span className="reading-copy"><span className="reading-title">{article.title}</span><span className="reading-summary">{article.summary}</span></span><span className="reading-time">1 min read <span aria-hidden="true">&#8599;</span></span></summary>
+            <div className="reading-body"><p>{article.body}</p></div>
+          </details>)}
+        </div>
       </section>
     </main>
     <dialog ref={dialog} className="header-dialog" aria-labelledby="dialog-title" onClose={() => setTopic(null)}>
