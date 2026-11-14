@@ -6,6 +6,10 @@ import reflectionVideoArtwork from './assets/watch-reflection.png'
 import './App.css'
 
 const information = {
+  Contact: { title: 'Contact', text: 'Contact details are not available yet. Please check back for a direct way to reach Mentis Forge.' },
+  Privacy: { title: 'Privacy', text: 'The privacy notice is not available yet. This placeholder is not a published privacy policy.' },
+  Terms: { title: 'Terms', text: 'Terms are not available yet. This placeholder is not a published terms of use agreement.' },
+  Accessibility: { title: 'Accessibility', text: 'Use Tab to move between controls and Enter or Space to activate buttons. Escape closes information dialogs. The theme control switches between light and dark modes. A dedicated accessibility statement and contact channel are not available yet.' },
   NeuroVideo: { title: 'Neuroplasticity & intentional practice', text: 'Video coming soon. This planned exploration looks at how repetition, attention, and environment shape learning. In the meantime, explore the Neuroplasticity topic and Latest Reading above.' },
   ReflectionVideo: { title: 'Symbols, reflection & the inner life', text: 'Video coming soon. A planned guided look at contemplative traditions and personal meaning. In the meantime, explore Self & Meaning in the topics above.' },
   Discovery: { title: 'Discovery', text: 'Begin with curiosity. Explore the topics and short readings on this page to find the questions you want to pursue.' },
@@ -26,6 +30,7 @@ function Sun() { return <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="
 function Moon() { return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M21 3A13 13 0 1 0 29 23 11 11 0 0 1 21 3Z"/></svg> }
 
 function App() {
+  const [copyrightYear] = useState(() => new Date().getFullYear())
   const [theme, setTheme] = useState<'light' | 'dark'>(() => { try { return localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark' } catch { return 'dark' } })
   const [menuOpen, setMenuOpen] = useState(false)
   const [topic, setTopic] = useState<Topic | null>(null)
@@ -113,7 +118,7 @@ function App() {
           </details>)}
         </div>
       </section>
-      <section className="inner-library" aria-labelledby="library-heading">
+      <section id="library" className="inner-library" aria-labelledby="library-heading">
         <img className="library-artwork" src={libraryArtwork} alt="" loading="lazy" decoding="async"/>
         <div className="library-content">
           <h2 id="library-heading">The Inner Library</h2>
@@ -180,6 +185,30 @@ function App() {
         </div>
       </section>
     </main>
+    <footer className="site-footer" aria-label="Site footer">
+      <a className="brand footer-brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">Neuroscience + Psychology</span></span></a>
+      <nav className="footer-column" aria-labelledby="footer-explore">
+        <h2 id="footer-explore">Explore</h2>
+        <a href="#topics">Topics</a>
+        <a href="#questions">Common questions</a>
+        <a href="#reading">Latest reading</a>
+        <a href="#about">Who we are</a>
+      </nav>
+      <nav className="footer-column" aria-labelledby="footer-community">
+        <h2 id="footer-community">Community</h2>
+        <a href="https://discord.com/" target="_blank" rel="noreferrer">Discord <span className="sr-only">(opens in a new tab)</span></a>
+        <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span className="sr-only">(opens in a new tab)</span></a>
+        <a href="#library">The Inner Library</a>
+      </nav>
+      <nav className="footer-column" aria-labelledby="footer-information">
+        <h2 id="footer-information">Information</h2>
+        {(['Contact', 'Privacy', 'Terms', 'Accessibility'] as const).map(item => <button key={item} onClick={() => showTopic(item)} aria-haspopup="dialog">{item}</button>)}
+      </nav>
+      <div className="footer-note">
+        <p>Mentis Forge provides educational content and does not offer medical diagnosis or treatment.</p>
+        <p className="copyright">&copy; {copyrightYear} Mentis Forge</p>
+      </div>
+    </footer>
     <dialog ref={dialog} className="header-dialog" aria-labelledby="dialog-title">
       <form method="dialog"><button className="dialog-close" aria-label="Close information">&times;</button></form>
       <h2 id="dialog-title">{topic && information[topic].title}</h2>
