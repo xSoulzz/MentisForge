@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import heroArtwork from './assets/mentis-hero-v2.png'
+import libraryArtwork from './assets/inner-library-detailed.png'
+import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
+import reflectionVideoArtwork from './assets/watch-reflection.png'
 import './App.css'
 
 const information = {
+  NeuroVideo: { title: 'Neuroplasticity & intentional practice', text: 'Video coming soon. This planned exploration looks at how repetition, attention, and environment shape learning. In the meantime, explore the Neuroplasticity topic and Latest Reading above.' },
+  ReflectionVideo: { title: 'Symbols, reflection & the inner life', text: 'Video coming soon. A planned guided look at contemplative traditions and personal meaning. In the meantime, explore Self & Meaning in the topics above.' },
+  Discovery: { title: 'Discovery', text: 'Begin with curiosity. Explore the topics and short readings on this page to find the questions you want to pursue.' },
+  Academy: { title: 'Academy', text: 'A direction for deeper study: connect ideas across neuroscience, psychology, and contemplative traditions. Structured learning in this part of the library is not yet available.' },
+  Mastery: { title: 'Mastery', text: 'A direction for continued practice: revisit what you learn, reflect on experience, and refine your understanding over time. This part of the library is not yet available.' },
   Neuroplasticity: { title: 'Neuroplasticity', text: 'Explore how experience and practice shape the brain throughout life. Start with the reading on repetition below.' },
   Attention: { title: 'Attention & Learning', text: 'Explore how the brain selects, sustains, and updates information. Start with the reading on attention below.' },
   Meaning: { title: 'Self & Meaning', text: 'Explore the neuroscience and psychology of identity, values, and meaning. We approach contemplative traditions as perspectives to examine, alongside scientific inquiry.' },
@@ -105,8 +113,34 @@ function App() {
           </details>)}
         </div>
       </section>
+      <section className="inner-library" aria-labelledby="library-heading">
+        <img className="library-artwork" src={libraryArtwork} alt="" loading="lazy" decoding="async"/>
+        <div className="library-content">
+          <h2 id="library-heading">The Inner Library</h2>
+          <nav className="library-paths" aria-label="Inner Library learning paths">
+            {(['Discovery', 'Academy', 'Mastery'] as const).map(path => <button key={path} onClick={() => showTopic(path)} aria-haspopup="dialog">{path}</button>)}
+          </nav>
+        </div>
+      </section>
+      <section id="watch" className="watch-section" aria-labelledby="watch-heading">
+        <h2 id="watch-heading">Watch &amp; explore</h2>
+        <div className="watch-grid">
+          {([
+            { key: 'NeuroVideo', image: neuroVideoArtwork, title: 'Neuroplasticity & intentional practice', description: 'How repetition, attention, and environment shape learning.' },
+            { key: 'ReflectionVideo', image: reflectionVideoArtwork, title: 'Symbols, reflection & the inner life', description: 'A guided look at contemplative traditions and personal meaning.' },
+          ] as const).map(video => <article className="watch-card" key={video.key}>
+            <button className="watch-trigger" aria-label={`${video.title}: video coming soon, view details`} aria-haspopup="dialog" onClick={() => showTopic(video.key)}>
+              <span className="watch-thumbnail">
+                <img src={video.image} alt="" loading="lazy" decoding="async"/>
+                <span className="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></svg></span>
+              </span>
+              <span className="watch-copy"><span className="watch-title">{video.title}</span><span className="watch-description">{video.description}</span><span className="watch-status">Video coming soon</span></span>
+            </button>
+          </article>)}
+        </div>
+      </section>
     </main>
-    <dialog ref={dialog} className="header-dialog" aria-labelledby="dialog-title" onClose={() => setTopic(null)}>
+    <dialog ref={dialog} className="header-dialog" aria-labelledby="dialog-title">
       <form method="dialog"><button className="dialog-close" aria-label="Close information">&times;</button></form>
       <h2 id="dialog-title">{topic && information[topic].title}</h2>
       <p>{topic && information[topic].text}</p>
