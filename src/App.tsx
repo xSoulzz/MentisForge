@@ -7,9 +7,11 @@ import Article from './pages/Article'
 import neuroplasticityText from './content/neuroplasticity.md?raw'
 import attentionText from './content/attention-learning.md?raw'
 import meaningText from './content/self-meaning.md?raw'
+import bodyText from './content/body-vitality.md?raw'
 import './App.css'
 
 const articleRoutes = {
+  Body: { path: '/topics/body-vitality/', category: 'Body & Vitality', text: bodyText },
   Meaning: { path: '/topics/self-meaning/', category: 'Self & Meaning', text: meaningText },
   Neuroplasticity: { path: '/topics/neuroplasticity/', category: 'Neuroplasticity', text: neuroplasticityText },
   Attention: { path: '/topics/attention-learning/', category: 'Attention & Learning', text: attentionText },
@@ -101,7 +103,7 @@ function App() {
             ['Meaning', 'Self & Meaning', 'The neuroscience and psychology of identity, values, and meaning.'],
             ['Body', 'Body & Vitality', 'How sleep, movement, nutrition, and stress shape brain function.'],
           ] as const).map(([key, title, description]) => <article className="topic-card" key={key}>
-            <h3>{(key === 'Neuroplasticity' || key === 'Attention' || key === 'Meaning') ? <a href={articleRoutes[key].path}>{title}</a> : <button onClick={() => showTopic(key)}>{title}</button>}</h3>
+            <h3><a href={articleRoutes[key].path}>{title}</a></h3>
             <p>{description}</p>
           </article>)}
         </div>
