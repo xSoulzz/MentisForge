@@ -445,3 +445,12 @@ summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; bor
 
 .topic-card h3 a { display: inline-flex; align-items: center; }
 a.text-link { display: inline-flex; align-items: center; gap: 5px; }
+.faq-answer .faq-long-answer { max-width: 730px; padding-top: 8px; }
+.faq-answer .faq-long-answer p { margin-bottom: 16px; font-size: 16px; line-height: 1.65; }
+.faq-long-answer h3 { margin: 26px 0 12px; color: var(--link); font: 400 23px/1.25 Georgia, serif; }
+@media (max-width: 540px) { .faq-answer .faq-long-answer p { font-size: 15px; } .faq-long-answer h3 { font-size: 21px; } }
+
+.faq-long-answer ul { margin: 0 0 18px; padding-left: 24px; font: 16px/1.65 Arial, sans-serif; }
+.faq-long-answer li { margin-bottom: 6px; padding-left: 4px; }
+.faq-long-answer li::marker { color: var(--gold); }
+@media (max-width: 540px) { .faq-long-answer ul { font-size: 15px; } }
