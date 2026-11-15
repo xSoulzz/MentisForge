@@ -17,9 +17,11 @@ import bodyText from './content/body-vitality.md?raw'
 import mindBrainText from './content/mind-brain.md?raw'
 import selfMasteryText from './content/self-mastery.md?raw'
 import growthChangeText from './content/growth-change.md?raw'
+import deeperLibraryText from './content/deeper-library.md?raw'
 import './App.css'
 
 const articleRoutes = {
+  DeeperLibrary: { path: '/pathways/deeper-library/', category: 'The Deeper Library', text: deeperLibraryText },
   GrowthChange: { path: '/pathways/growth-change/', category: 'Growth & Change', text: growthChangeText },
   SelfMastery: { path: '/pathways/self-mastery/', category: 'Self-Mastery', text: selfMasteryText },
   MindBrain: { path: '/pathways/mind-brain/', category: 'The Mind & Brain', text: mindBrainText },
@@ -104,7 +106,7 @@ function App() {
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
     </header>
     <main id="main-content" tabIndex={-1}>
-      {currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : undefined}/> : <>
+      {currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
           <p className="eyebrow">Neuroscience · Psychology · Possibility</p>
@@ -122,7 +124,7 @@ function App() {
             { title: 'The Mind & Brain', text: 'Neuroscience for a deeper understanding of how you think, feel and learn.', href: articleRoutes.MindBrain.path, icon: 'M24 8v32M24 12C13 2 5 15 9 21 2 28 10 40 18 37c2 6 6 3 6-1m0-24c11-10 19 3 15 9 7 7-1 19-9 16-2 6-6 3-6-1M15 14c-4 5 5 7 2 12m-7 4c5-4 9 0 8 5m15-21c4 5-5 7-2 12m7 4c-5-4-9 0-8 5' },
             { title: 'Self-Mastery', text: 'Evidence-based tools to build focus, resilience, and mental clarity.', href: articleRoutes.SelfMastery.path, icon: 'm4 15 20-10 20 10-20 10Zm0 10 20 10 20-10M4 35l20 10 20-10' },
             { title: 'Growth & Change', text: 'Psychology and habit science for lasting, meaningful transformation.', href: articleRoutes.GrowthChange.path, icon: 'M24 43V24M24 31C23 11 34 6 44 7c0 14-9 22-20 22M24 25C23 10 14 6 4 8c0 12 8 19 20 17m0 5 13-15M24 25 12 14' },
-            { title: 'The Deeper Library', text: 'Foundational ideas, enduring texts and cross-disciplinary perspectives on the mind.', href: '/#library', icon: 'M24 12C17 7 9 7 4 9v29c7-2 14-1 20 4 6-5 13-6 20-4V9c-5-2-13-2-20 3Zm0 0v30' },
+            { title: 'The Deeper Library', text: 'Foundational ideas, enduring texts and cross-disciplinary perspectives on the mind.', href: articleRoutes.DeeperLibrary.path, icon: 'M24 12C17 7 9 7 4 9v29c7-2 14-1 20 4 6-5 13-6 20-4V9c-5-2-13-2-20 3Zm0 0v30' },
           ].map(pillar => <a className="learning-card" key={pillar.title} href={pillar.href}><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d={pillar.icon}/></svg><div><h3>{pillar.title}</h3><p>{pillar.text}</p></div></a>)}
         </div>
       </section>
