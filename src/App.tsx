@@ -70,6 +70,12 @@ function App() {
     document.addEventListener('keydown', dismiss)
     return () => document.removeEventListener('keydown', dismiss)
   }, [menuOpen])
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1101px)')
+    const closeMenu = () => { if (desktop.matches) setMenuOpen(false) }
+    desktop.addEventListener('change', closeMenu)
+    return () => desktop.removeEventListener('change', closeMenu)
+  }, [])
   function showTopic(value: Topic) {
     setTopic(value)
     dialog.current?.showModal()
@@ -86,7 +92,7 @@ function App() {
       <div className="header-content">
         <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">The science of a more capable mind</span></span></a>
         <nav className="desktop-nav" aria-label="Main navigation">{navigation}</nav>
-        <button className="theme-toggle" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun/> : <Moon/>}</button>
+        <button className="theme-toggle" role="switch" aria-checked={theme === 'dark'} aria-label="Dark mode" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}><span className={theme === 'light' ? 'theme-option active' : 'theme-option'}><Sun/></span><span className={theme === 'dark' ? 'theme-option active' : 'theme-option'}><Moon/></span></button>
         <button ref={menuButton} className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="header-menu" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
       </div>
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
