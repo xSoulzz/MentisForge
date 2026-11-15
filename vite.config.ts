@@ -8,6 +8,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         home: fileURLToPath(new URL('./index.html', import.meta.url)),
+        terms: fileURLToPath(new URL('./terms/index.html', import.meta.url)),
         mindBrain: fileURLToPath(new URL('./pathways/mind-brain/index.html', import.meta.url)),
         selfMastery: fileURLToPath(new URL('./pathways/self-mastery/index.html', import.meta.url)),
         growthChange: fileURLToPath(new URL('./pathways/growth-change/index.html', import.meta.url)),

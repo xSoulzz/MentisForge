@@ -1,0 +1,11 @@
+.terms-meta { margin: 24px auto 0; max-width: 650px; font: 15px/1.9 Arial, sans-serif; color: var(--muted); }
+.terms-page a:not(.article-back) { overflow-wrap: anywhere; }
+.terms-meta a, .terms-page .article-prose a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+.terms-page .article-prose p { font: 17px/1.8 Arial, sans-serif; }
+.terms-page .article-prose h2:first-child { margin-top: 0; }
+.terms-page .article-contents nav a { min-height: 44px; }
+@media (max-width: 540px) {
+  .terms-page .article-heading h1 { font-size: 36px; }
+  .terms-meta { text-align: left; font-size: 14px; }
+  .terms-page .article-prose p { font-size: 16px; }
+}

@@ -4,6 +4,7 @@ import libraryArtwork from './assets/inner-library-detailed.png'
 import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
 import reflectionVideoArtwork from './assets/watch-reflection.png'
 import Article from './pages/Article'
+import Terms from './pages/Terms'
 import AdultNeuroplasticityAnswer from './pages/AdultNeuroplasticityAnswer'
 import HabitsAnswer from './pages/HabitsAnswer'
 import AttentionAnswer from './pages/AttentionAnswer'
@@ -32,12 +33,12 @@ const articleRoutes = {
 }
 const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '')
 const currentArticle = Object.values(articleRoutes).find(article => article.path.slice(0, -1) === currentPath)
-const isArticle = Boolean(currentArticle)
+const isTerms = currentPath === '/terms'
+const isArticle = Boolean(currentArticle) || isTerms
 
 const information = {
   Contact: { title: 'Contact', text: 'Contact details are not available yet. Please check back for a direct way to reach Mentis Forge.' },
   Privacy: { title: 'Privacy', text: 'The privacy notice is not available yet. This placeholder is not a published privacy policy.' },
-  Terms: { title: 'Terms', text: 'Terms are not available yet. This placeholder is not a published terms of use agreement.' },
   Accessibility: { title: 'Accessibility', text: 'Use Tab to move between controls and Enter or Space to activate buttons. Escape closes information dialogs. The theme control switches between light and dark modes. A dedicated accessibility statement and contact channel are not available yet.' },
   NeuroVideo: { title: 'Neuroplasticity & intentional practice', text: 'Video coming soon. This planned exploration looks at how repetition, attention, and environment shape learning. In the meantime, explore the Neuroplasticity topic and Latest Reading above.' },
   ReflectionVideo: { title: 'Symbols, reflection & the inner life', text: 'Video coming soon. A planned guided look at contemplative traditions and personal meaning. In the meantime, explore Self & Meaning in the topics above.' },
@@ -106,7 +107,7 @@ function App() {
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
     </header>
     <main id="main-content" tabIndex={-1}>
-      {currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
+      {isTerms ? <Terms/> : currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
           <p className="eyebrow">Neuroscience · Psychology · Possibility</p>
@@ -258,7 +259,7 @@ function App() {
       </nav>
       <nav className="footer-column" aria-labelledby="footer-information">
         <h2 id="footer-information">Information</h2>
-        {(['Contact', 'Privacy', 'Terms', 'Accessibility'] as const).map(item => <button key={item} onClick={() => showTopic(item)} aria-haspopup="dialog">{item}</button>)}
+        {(['Contact', 'Privacy', 'Terms', 'Accessibility'] as const).map(item => item === 'Terms' ? <a key={item} href="/terms/" aria-current={isTerms ? 'page' : undefined}>Terms</a> : <button key={item} onClick={() => showTopic(item)} aria-haspopup="dialog">{item}</button>)}
       </nav>
       <div className="footer-note">
         <p>Mentis Forge provides educational content and does not offer medical diagnosis or treatment.</p>
