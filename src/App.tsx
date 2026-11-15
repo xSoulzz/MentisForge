@@ -9,6 +9,7 @@ import HabitsAnswer from './pages/HabitsAnswer'
 import AttentionAnswer from './pages/AttentionAnswer'
 import SkillPracticeReading from './pages/SkillPracticeReading'
 import AttentionReading from './pages/AttentionReading'
+import SleepReading from './pages/SleepReading'
 import neuroplasticityText from './content/neuroplasticity.md?raw'
 import attentionText from './content/attention-learning.md?raw'
 import meaningText from './content/self-meaning.md?raw'
@@ -133,10 +134,10 @@ function App() {
           {[
             { category: 'Neuroplasticity', title: 'What changes in the brain when we repeat a skill?', summary: 'Practising a skill can change how neurons communicate and how brain networks work together.', body: null },
             { category: 'Attention', title: 'Why is attention easier to lose than regain?', summary: 'A distraction can interrupt us in a moment; returning means recovering our place.', body: null },
-            { category: 'Sleep & Recovery', title: 'How does sleep support learning?', summary: 'Sleep helps the brain consolidate new memories and prepare for future learning.', body: 'Learning continues beyond the moment of practice. During sleep, the brain processes information from waking experience, helping some memories become more stable. Rest also supports our ability to pay attention when we return to learning. Instead of treating sleep as time taken away from study, consider it part of the learning process. Practice and recovery work together; neither is a shortcut that replaces the other.' },
+            { category: 'Sleep & Recovery', title: 'How does sleep support learning?', summary: 'Sleep helps the brain consolidate new memories and prepare for future learning.', body: null },
           ].map(article => <details className="reading-item" key={article.title}>
-            <summary><span className="category-label">{article.category}</span><span className="reading-copy"><span className="reading-title">{article.title}</span><span className="reading-summary">{article.summary}</span></span><span className="reading-time">{article.category === 'Sleep & Recovery' ? 1 : 3} min read <span aria-hidden="true">&#8599;</span></span></summary>
-            <div className="reading-body">{article.category === 'Neuroplasticity' ? <SkillPracticeReading/> : article.category === 'Attention' ? <AttentionReading/> : <p>{article.body}</p>}</div>
+            <summary><span className="category-label">{article.category}</span><span className="reading-copy"><span className="reading-title">{article.title}</span><span className="reading-summary">{article.summary}</span></span><span className="reading-time">3 min read <span aria-hidden="true">&#8599;</span></span></summary>
+            <div className="reading-body">{article.category === 'Neuroplasticity' ? <SkillPracticeReading/> : article.category === 'Attention' ? <AttentionReading/> : <SleepReading/>}</div>
           </details>)}
         </div>
       </section>
