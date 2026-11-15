@@ -645,6 +645,8 @@ a.text-link { display: inline-flex; align-items: center; gap: 5px; }
   .footer-column:last-of-type h2 { grid-column: 1 / -1; }
 }
 /* Wider phones can retain editorial category columns without squeezing copy. */
+.contact-emails { display: flex; flex-direction: column; }
+.contact-emails a { display: flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; color: var(--link); font: 16px/1.5 Arial, sans-serif; text-decoration: underline; text-underline-offset: 4px; }
 @media (min-width: 480px) and (max-width: 600px) {
   .reading-item summary { grid-template-columns: 27% minmax(0, 1fr); gap: 8px 18px; }
   .reading-item .category-label { grid-column: 1; grid-row: 1; border-right: 1px solid var(--edge); padding-right: 12px; }

@@ -37,7 +37,7 @@ const isTerms = currentPath === '/terms'
 const isArticle = Boolean(currentArticle) || isTerms
 
 const information = {
-  Contact: { title: 'Contact', text: 'Contact details are not available yet. Please check back for a direct way to reach Mentis Forge.' },
+  Contact: { title: 'Contact', text: 'Get in touch with Brandon or Noa.' },
   Privacy: { title: 'Privacy', text: 'The privacy notice is not available yet. This placeholder is not a published privacy policy.' },
   Accessibility: { title: 'Accessibility', text: 'Use Tab to move between controls and Enter or Space to activate buttons. Escape closes information dialogs. The theme control switches between light and dark modes. A dedicated accessibility statement and contact channel are not available yet.' },
   NeuroVideo: { title: 'Neuroplasticity & intentional practice', text: 'Video coming soon. This planned exploration looks at how repetition, attention, and environment shape learning. In the meantime, explore the Neuroplasticity topic and Latest Reading above.' },
@@ -270,6 +270,10 @@ function App() {
       <form method="dialog"><button className="dialog-close" aria-label="Close information">&times;</button></form>
       <h2 id="dialog-title">{topic && information[topic].title}</h2>
       <p>{topic && information[topic].text}</p>
+      {topic === 'Contact' && <div className="contact-emails">
+        <a href="mailto:Brandon@mentisforge.com">Brandon@mentisforge.com</a>
+        <a href="mailto:Noa@mentisforge.com">Noa@mentisforge.com</a>
+      </div>}
     </dialog>
   </div>
 }
