@@ -7,6 +7,8 @@ import Article from './pages/Article'
 import AdultNeuroplasticityAnswer from './pages/AdultNeuroplasticityAnswer'
 import HabitsAnswer from './pages/HabitsAnswer'
 import AttentionAnswer from './pages/AttentionAnswer'
+import SkillPracticeReading from './pages/SkillPracticeReading'
+import AttentionReading from './pages/AttentionReading'
 import neuroplasticityText from './content/neuroplasticity.md?raw'
 import attentionText from './content/attention-learning.md?raw'
 import meaningText from './content/self-meaning.md?raw'
@@ -129,12 +131,12 @@ function App() {
         <h2 id="reading-heading">Latest reading</h2>
         <div className="reading-list">
           {[
-            { category: 'Neuroplasticity', title: 'What changes in the brain when we repeat a skill?', summary: 'Repeated practice strengthens neural circuits, making skills more efficient.', body: 'Learning a skill involves more than repeating a movement or remembering a fact. With practice, the networks involved in the task can become better coordinated. Progress depends on what we practice, the feedback we receive, and the conditions around learning. Repeating an error can reinforce it too. A useful starting point is to choose one small part of a skill, practice it with attention, and use feedback to adjust the next attempt.' },
-            { category: 'Attention', title: 'Why is attention easier to lose than regain?', summary: 'Focus is fragile; our attention systems are easily pulled by distraction.', body: 'Attention is selective. A sound, a notification, or an unfinished concern can draw us away from the task we intended to do. Returning means finding our place and rebuilding the context of that task. Try noticing what tends to interrupt you and making one practical change, such as silencing notifications during a short period of focused work. The aim is not perfect concentration, but an environment that makes returning easier.' },
+            { category: 'Neuroplasticity', title: 'What changes in the brain when we repeat a skill?', summary: 'Practising a skill can change how neurons communicate and how brain networks work together.', body: null },
+            { category: 'Attention', title: 'Why is attention easier to lose than regain?', summary: 'A distraction can interrupt us in a moment; returning means recovering our place.', body: null },
             { category: 'Sleep & Recovery', title: 'How does sleep support learning?', summary: 'Sleep helps the brain consolidate new memories and prepare for future learning.', body: 'Learning continues beyond the moment of practice. During sleep, the brain processes information from waking experience, helping some memories become more stable. Rest also supports our ability to pay attention when we return to learning. Instead of treating sleep as time taken away from study, consider it part of the learning process. Practice and recovery work together; neither is a shortcut that replaces the other.' },
           ].map(article => <details className="reading-item" key={article.title}>
-            <summary><span className="category-label">{article.category}</span><span className="reading-copy"><span className="reading-title">{article.title}</span><span className="reading-summary">{article.summary}</span></span><span className="reading-time">1 min read <span aria-hidden="true">&#8599;</span></span></summary>
-            <div className="reading-body"><p>{article.body}</p></div>
+            <summary><span className="category-label">{article.category}</span><span className="reading-copy"><span className="reading-title">{article.title}</span><span className="reading-summary">{article.summary}</span></span><span className="reading-time">{article.category === 'Sleep & Recovery' ? 1 : 3} min read <span aria-hidden="true">&#8599;</span></span></summary>
+            <div className="reading-body">{article.category === 'Neuroplasticity' ? <SkillPracticeReading/> : article.category === 'Attention' ? <AttentionReading/> : <p>{article.body}</p>}</div>
           </details>)}
         </div>
       </section>

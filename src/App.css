@@ -454,3 +454,6 @@ a.text-link { display: inline-flex; align-items: center; gap: 5px; }
 .faq-long-answer li { margin-bottom: 6px; padding-left: 4px; }
 .faq-long-answer li::marker { color: var(--gold); }
 @media (max-width: 540px) { .faq-long-answer ul { font-size: 15px; } }
+.reading-body .reading-long-form p { margin: 0 0 20px; color: var(--ink); line-height: 1.75; }
+.reading-long-form h3 { margin: 28px 0 14px; color: var(--link); font: 400 24px/1.25 Georgia, serif; }
+@media (max-width: 540px) { .reading-long-form h3 { font-size: 22px; } }
