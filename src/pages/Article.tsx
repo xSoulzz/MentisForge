@@ -12,7 +12,7 @@ function InlineText({ text }: { text: string }) {
   })
 }
 
-export default function Article({ text, category, pathway = false }: { text: string; category: string; pathway?: boolean }) {
+export default function Article({ text, category, pathway }: { text: string; category: string; pathway?: string }) {
   const lines = text.trim().split(/\r?\n/)
   const title = lines.shift()!.replace(/^# /, '')
   while (lines[0]?.trim() === '') lines.shift()
@@ -23,7 +23,7 @@ export default function Article({ text, category, pathway = false }: { text: str
   return <article className="article-page" aria-labelledby="article-title">
     <a className="article-back" href={pathway ? '/#learning' : '/#topics'}><span aria-hidden="true">&larr;</span> Back to homepage</a>
     <header className="article-heading">
-      <p className="article-kicker">{pathway ? 'Core pathway 01' : <>Explore topics <span aria-hidden="true">/</span> {category}</>}</p>
+      <p className="article-kicker">{pathway ? `Core pathway ${pathway}` : <>Explore topics <span aria-hidden="true">/</span> {category}</>}</p>
       <h1 id="article-title">{title}</h1>
       <p className="article-subtitle"><InlineText text={subtitle}/></p>
       <p className="article-meta">Mentis Forge <span aria-hidden="true">&middot;</span> {readingMinutes} min read</p>

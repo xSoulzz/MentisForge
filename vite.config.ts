@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         home: fileURLToPath(new URL('./index.html', import.meta.url)),
         mindBrain: fileURLToPath(new URL('./pathways/mind-brain/index.html', import.meta.url)),
+        selfMastery: fileURLToPath(new URL('./pathways/self-mastery/index.html', import.meta.url)),
         bodyVitality: fileURLToPath(new URL('./topics/body-vitality/index.html', import.meta.url)),
         selfMeaning: fileURLToPath(new URL('./topics/self-meaning/index.html', import.meta.url)),
         attentionLearning: fileURLToPath(new URL('./topics/attention-learning/index.html', import.meta.url)),
