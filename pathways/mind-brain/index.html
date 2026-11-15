@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-page="article">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#091c1b" />
+    <script>
+      try {
+        const theme = localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#fbf5e7' : '#091c1b';
+      } catch { /* Use the light palette when storage is unavailable. */ }
+    </script>
+    <meta name="description" content="Neuroscience for a deeper understanding of how you think, feel and learn. Core Pathway 01 from Mentis Forge." />
+    <title>The Mind &amp; Brain | Mentis Forge</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

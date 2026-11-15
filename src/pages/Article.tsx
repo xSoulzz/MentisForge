@@ -12,7 +12,7 @@ function InlineText({ text }: { text: string }) {
   })
 }
 
-export default function Article({ text, category }: { text: string; category: string }) {
+export default function Article({ text, category, pathway = false }: { text: string; category: string; pathway?: boolean }) {
   const lines = text.trim().split(/\r?\n/)
   const title = lines.shift()!.replace(/^# /, '')
   while (lines[0]?.trim() === '') lines.shift()
@@ -21,11 +21,11 @@ export default function Article({ text, category }: { text: string; category: st
   const readingMinutes = Math.ceil(text.split(/\s+/).length / 220)
   const sections = blocks.flatMap((block, index) => block.startsWith('## ') ? [{ title: block.slice(3), id: `section-${index}` }] : [])
   return <article className="article-page" aria-labelledby="article-title">
-    <a className="article-back" href="/#topics"><span aria-hidden="true">&larr;</span> Back to homepage</a>
+    <a className="article-back" href={pathway ? '/#learning' : '/#topics'}><span aria-hidden="true">&larr;</span> Back to homepage</a>
     <header className="article-heading">
-      <p className="article-kicker">Explore topics <span aria-hidden="true">/</span> {category}</p>
+      <p className="article-kicker">{pathway ? 'Core pathway 01' : <>Explore topics <span aria-hidden="true">/</span> {category}</>}</p>
       <h1 id="article-title">{title}</h1>
-      <p className="article-subtitle">{subtitle}</p>
+      <p className="article-subtitle"><InlineText text={subtitle}/></p>
       <p className="article-meta">Mentis Forge <span aria-hidden="true">&middot;</span> {readingMinutes} min read</p>
     </header>
     <div className="article-layout">
@@ -43,7 +43,7 @@ export default function Article({ text, category }: { text: string; category: st
           : block.startsWith('- ')
           ? <ul key={index}>{block.split('\n').map((item, itemIndex) => <li key={itemIndex}><InlineText text={item.replace(/^- /, '')}/></li>)}</ul>
           : <p key={index}><InlineText text={block}/></p>)}
-        <div className="article-end"><span>Continue exploring</span><a className="article-back" href="/#topics"><span aria-hidden="true">&larr;</span> Back to homepage</a></div>
+        <div className="article-end"><span>Continue exploring</span><a className="article-back" href={pathway ? '/#learning' : '/#topics'}><span aria-hidden="true">&larr;</span> Back to homepage</a></div>
       </div>
     </div>
   </article>
