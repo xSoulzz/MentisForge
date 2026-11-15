@@ -6,6 +6,7 @@ import reflectionVideoArtwork from './assets/watch-reflection.png'
 import Article from './pages/Article'
 import AdultNeuroplasticityAnswer from './pages/AdultNeuroplasticityAnswer'
 import HabitsAnswer from './pages/HabitsAnswer'
+import AttentionAnswer from './pages/AttentionAnswer'
 import neuroplasticityText from './content/neuroplasticity.md?raw'
 import attentionText from './content/attention-learning.md?raw'
 import meaningText from './content/self-meaning.md?raw'
@@ -117,10 +118,10 @@ function App() {
           {([
             ['Neuroplasticity', 'Neuroplasticity', 'What does neuroplasticity mean in adulthood?', null],
             ['Attention', 'Habits', 'How does the brain form a new habit?', null],
-            ['Attention', 'Attention', 'Can focused attention change what we learn?', 'Attention helps determine which information we process and practice. Reducing competing demands can support learning, while breaks and returning to material give us opportunities to revisit it.'],
+            ['Attention', 'Attention', 'Can focused attention change what we learn?', null],
           ] as const).map(([key, category, question, answer], index) => <details className="faq-item" name="common-questions" key={question} open={index === 0}>
             <summary><span className="category-label">{category}</span><span className="faq-question">{question}</span><span className="faq-symbol" aria-hidden="true"/></summary>
-            <div className="faq-answer">{key === 'Neuroplasticity' ? <AdultNeuroplasticityAnswer/> : category === 'Habits' ? <HabitsAnswer/> : <p>{answer}</p>}{(key === 'Neuroplasticity' || key === 'Attention') ? <a className="text-link" href={articleRoutes[key].path}>Explore the topic <span aria-hidden="true">&rarr;</span></a> : <button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button>}</div>
+            <div className="faq-answer">{key === 'Neuroplasticity' ? <AdultNeuroplasticityAnswer/> : category === 'Habits' ? <HabitsAnswer/> : category === 'Attention' ? <AttentionAnswer/> : <p>{answer}</p>}{(key === 'Neuroplasticity' || key === 'Attention') ? <a className="text-link" href={articleRoutes[key].path}>Explore the topic <span aria-hidden="true">&rarr;</span></a> : <button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button>}</div>
           </details>)}
         </div>
       </section>
