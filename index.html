@@ -7,12 +7,12 @@
     <meta name="theme-color" content="#121615" />
     <script>
       try {
-        const theme = localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark';
+        const theme = localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light';
         document.documentElement.dataset.theme = theme;
         document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#fbf5e7' : '#121615';
-      } catch { /* Default to dark when storage is unavailable. */ }
+      } catch { /* Use the light palette when storage is unavailable. */ }
     </script>
-    <meta name="description" content="Mentis Forge — Neuroscience and Esoteric Psychology." />
+    <meta name="description" content="Evidence-based insights from neuroscience and psychology. Understand your mind and build your next chapter with Mentis Forge." />
     <title>Mentis Forge</title>
   </head>
   <body>

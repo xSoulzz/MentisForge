@@ -7,10 +7,10 @@
     <meta name="theme-color" content="#091c1b" />
     <script>
       try {
-        const theme = localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark';
+        const theme = localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light';
         document.documentElement.dataset.theme = theme;
         document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#fbf5e7' : '#091c1b';
-      } catch { /* Default to dark when storage is unavailable. */ }
+      } catch { /* Use the light palette when storage is unavailable. */ }
     </script>
     <meta name="description" content="Neuroplasticity, Hermetic philosophy, and the practice of conscious transformation. An exploration from Mentis Forge." />
     <title>The Inner World and the Outer Life | Mentis Forge</title>

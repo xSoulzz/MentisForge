@@ -52,7 +52,7 @@ function Moon() { return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2
 
 function App() {
   const [copyrightYear] = useState(() => new Date().getFullYear())
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => { try { return localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark' } catch { return 'dark' } })
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => { try { return localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light' } catch { return 'light' } })
   const [menuOpen, setMenuOpen] = useState(false)
   const [topic, setTopic] = useState<Topic | null>(null)
   const dialog = useRef<HTMLDialogElement>(null)
@@ -76,29 +76,43 @@ function App() {
   }
   const navigation = <>
     <a className="nav-link" href="/#topics" onClick={() => setMenuOpen(false)}>Topics</a>
-    <a className="nav-link" href="/#questions" onClick={() => setMenuOpen(false)}>Questions</a>
+    <a className="nav-link" href="/#reading" onClick={() => setMenuOpen(false)}>Reading</a>
     <a className="nav-link" href="/#about" onClick={() => setMenuOpen(false)}>About</a>
-    <a className="community-link" href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Join Discord</a>
+    <a className="nav-link" href="/#community" onClick={() => setMenuOpen(false)}>Community</a>
   </>
   return <div className={`landing-shell${isArticle ? ' article-shell' : ''}`}>
+    <a className="skip-link" href="#main-content">Skip to content</a>
     <header className="site-header">
       <div className="header-content">
-        <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">Neuroscience + Psychology</span></span></a>
+        <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">The science of a more capable mind</span></span></a>
         <nav className="desktop-nav" aria-label="Main navigation">{navigation}</nav>
         <button className="theme-toggle" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun/> : <Moon/>}</button>
         <button ref={menuButton} className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="header-menu" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
       </div>
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
     </header>
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {currentArticle ? <Article text={currentArticle.text} category={currentArticle.category}/> : <>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
-          <h1 id="hero-heading">Study the mind.<br/>Explore meaning.<br/>Practice change.</h1>
-          <p className="hero-description">Neuroscience, psychology, and contemplative traditions for a more intentional life.</p>
-          <a className="hero-cta" href="/#topics">Learn more <span aria-hidden="true">&rarr;</span></a>
+          <p className="eyebrow">Neuroscience · Psychology · Possibility</p>
+          <h1 id="hero-heading">Understand your mind.<br/>Build your next chapter.</h1>
+          <p className="hero-description">Evidence-based insights from neuroscience and psychology on how the brain learns, adapts, and finds meaning in everyday life.</p>
+          <a className="hero-cta" href="/#topics">Explore the research <span aria-hidden="true">&rarr;</span></a>
         </div>
         <div className="hero-art"><img src={heroArtwork} width="1619" height="971" fetchPriority="high" alt="Ivory anatomical brain beneath a classical gold arch, with branching golden neurons on either side."/></div>
+      </section>
+      <section className="learning-section" aria-labelledby="learning-heading">
+        <p className="eyebrow">The four learning pillars</p>
+        <h2 id="learning-heading">Core pathways for a more capable mind</h2>
+        <div className="learning-grid">
+          {[
+            { title: 'The Mind & Brain', text: 'Neuroscience for a deeper understanding of how you think, feel and learn.', href: '/topics/neuroplasticity/', icon: 'M24 8v32M24 12C13 2 5 15 9 21 2 28 10 40 18 37c2 6 6 3 6-1m0-24c11-10 19 3 15 9 7 7-1 19-9 16-2 6-6 3-6-1M15 14c-4 5 5 7 2 12m-7 4c5-4 9 0 8 5m15-21c4 5-5 7-2 12m7 4c-5-4-9 0-8 5' },
+            { title: 'Self-Mastery', text: 'Evidence-based tools to build focus, resilience and mental clarity.', href: '/topics/attention-learning/', icon: 'm4 15 20-10 20 10-20 10Zm0 10 20 10 20-10M4 35l20 10 20-10' },
+            { title: 'Growth & Change', text: 'Psychology and habit science for lasting, meaningful transformation.', href: '/topics/self-meaning/', icon: 'M24 43V24M24 31C23 11 34 6 44 7c0 14-9 22-20 22M24 25C23 10 14 6 4 8c0 12 8 19 20 17m0 5 13-15M24 25 12 14' },
+            { title: 'The Deeper Library', text: 'Foundational ideas, enduring texts and cross-disciplinary perspectives on the mind.', href: '/#library', icon: 'M24 12C17 7 9 7 4 9v29c7-2 14-1 20 4 6-5 13-6 20-4V9c-5-2-13-2-20 3Zm0 0v30' },
+          ].map(pillar => <a className="learning-card" key={pillar.title} href={pillar.href}><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d={pillar.icon}/></svg><div><h3>{pillar.title}</h3><p>{pillar.text}</p></div></a>)}
+        </div>
       </section>
       <section id="topics" className="topics-section" aria-labelledby="topics-heading">
         <h2 id="topics-heading">Explore topics</h2>
@@ -122,7 +136,7 @@ function App() {
             ['Neuroplasticity', 'Neuroplasticity', 'What does neuroplasticity mean in adulthood?', null],
             ['Attention', 'Habits', 'How does the brain form a new habit?', null],
             ['Attention', 'Attention', 'Can focused attention change what we learn?', null],
-          ] as const).map(([key, category, question, answer], index) => <details className="faq-item" name="common-questions" key={question} open={index === 0}>
+          ] as const).map(([key, category, question, answer]) => <details className="faq-item" name="common-questions" key={question}>
             <summary><span className="category-label">{category}</span><span className="faq-question">{question}</span><span className="faq-symbol" aria-hidden="true"/></summary>
             <div className="faq-answer">{key === 'Neuroplasticity' ? <AdultNeuroplasticityAnswer/> : category === 'Habits' ? <HabitsAnswer/> : category === 'Attention' ? <AttentionAnswer/> : <p>{answer}</p>}{(key === 'Neuroplasticity' || key === 'Attention') ? <a className="text-link" href={articleRoutes[key].path}>Explore the topic <span aria-hidden="true">&rarr;</span></a> : <button className="text-link" onClick={() => showTopic(key)}>Explore the topic <span aria-hidden="true">&rarr;</span></button>}</div>
           </details>)}
@@ -132,7 +146,7 @@ function App() {
         <h2 id="reading-heading">Latest reading</h2>
         <div className="reading-list">
           {[
-            { category: 'Neuroplasticity', title: 'What changes in the brain when we repeat a skill?', summary: 'Practising a skill can change how neurons communicate and how brain networks work together.', body: null },
+            { category: 'Neuroplasticity', title: 'What changes in the brain when we repeat a skill?', summary: 'Practicing a skill can change how neural networks communicate and how brain networks work together.', body: null },
             { category: 'Attention', title: 'Why is attention easier to lose than regain?', summary: 'A distraction can interrupt us in a moment; returning means recovering our place.', body: null },
             { category: 'Sleep & Recovery', title: 'How does sleep support learning?', summary: 'Sleep helps the brain consolidate new memories and prepare for future learning.', body: null },
           ].map(article => <details className="reading-item" key={article.title}>
@@ -188,7 +202,8 @@ function App() {
         </div>
       </section>
       <section id="about" className="about-section" aria-labelledby="about-heading">
-        <h2 id="about-heading">Who we are</h2>
+        <p className="eyebrow">Curiosity, shared</p>
+        <h2 id="about-heading">Meet the guides</h2>
         <div className="about-grid">
           <p className="about-introduction">We're building a space to study neuroscience, psychology, and contemplative traditions with curiosity and care.</p>
           {['Noa', 'Brandon'].map(name => <article className="person-card" key={name} aria-labelledby={`person-${name.toLowerCase()}`}>
@@ -199,10 +214,13 @@ function App() {
             <h3 id={`person-${name.toLowerCase()}`}>{name}</h3>
           </article>)}
         </div>
+      </section>
+      <section id="community" className="community-section" aria-labelledby="community-heading">
+        <div className="community-copy"><p className="eyebrow">Keep the conversation growing</p><h2 id="community-heading">Join the Mentis Forge community</h2>
+          <p>Thoughtful reading, new research highlights, and conversations about the science of a more capable mind.</p></div>
         <div className="about-community">
-          <p>Join the community for deeper inquiry, shared practice, and ongoing conversation.</p>
           <nav aria-label="Join the Mentis Forge community">
-            <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Discord <span aria-hidden="true">&#8599;</span></a>
+            <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Join us on Discord <span aria-hidden="true">&#8599;</span></a>
             <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span aria-hidden="true">&#8599;</span></a>
           </nav>
         </div>

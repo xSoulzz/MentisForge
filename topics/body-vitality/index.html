@@ -7,10 +7,10 @@
     <meta name="theme-color" content="#091c1b" />
     <script>
       try {
-        const theme = localStorage.getItem('mentis-theme') === 'light' ? 'light' : 'dark';
+        const theme = localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light';
         document.documentElement.dataset.theme = theme;
         document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#fbf5e7' : '#091c1b';
-      } catch { /* Default to dark when storage is unavailable. */ }
+      } catch { /* Use the light palette when storage is unavailable. */ }
     </script>
     <meta name="description" content="How sleep, movement, nutrition, and stress shape brain function. An exploration of body and vitality from Mentis Forge." />
     <title>Body &amp; Vitality | Mentis Forge</title>
