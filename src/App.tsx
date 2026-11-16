@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import heroArtwork from './assets/mentis-hero-v2.png'
+import noaPortrait from './assets/noa-portrait.png'
+import brandonPortrait from './assets/brandon-portrait.png'
 import libraryArtwork from './assets/inner-library-detailed.png'
 import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
 import reflectionVideoArtwork from './assets/watch-reflection.png'
@@ -222,10 +224,7 @@ function App() {
         <div className="about-grid">
           <p className="about-introduction">We're building a space to study neuroscience, psychology, and contemplative traditions with curiosity and care.</p>
           {['Noa', 'Brandon'].map(name => <article className="person-card" key={name} aria-labelledby={`person-${name.toLowerCase()}`}>
-            <div className="portrait-placeholder" role="img" aria-label={`Portrait placeholder for ${name}`}>
-              <svg viewBox="0 0 80 88" fill="currentColor" aria-hidden="true"><path d="M40 9c-13 0-20 9-20 23 0 10 4 18 10 22v8C15 65 8 72 8 84h64c0-12-7-19-22-22v-8c6-4 10-12 10-22C60 18 53 9 40 9Z"/></svg>
-              <span aria-hidden="true">Portrait<br/>placeholder</span>
-            </div>
+            <img className="profile-portrait" src={name === 'Noa' ? noaPortrait : brandonPortrait} alt={`Portrait of ${name}`} width="90" height="110" loading="lazy" decoding="async"/>
             <h3 id={`person-${name.toLowerCase()}`}>{name}</h3>
           </article>)}
         </div>

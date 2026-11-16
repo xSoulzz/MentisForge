@@ -426,6 +426,7 @@ a.text-link { display: inline-flex; align-items: center; gap: 5px; }
 .about-grid { margin-top: 24px; }
 .about-introduction { font-size: 16px; line-height: 1.7; }
 .portrait-placeholder { width: 90px; height: 110px; }
+.profile-portrait { display: block; width: 90px; height: 110px; flex-shrink: 0; object-fit: cover; object-position: center top; border: 1px solid var(--edge); border-radius: 10px; }
 .community-section { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 32px; margin: 30px 0; border-radius: 12px; background: radial-gradient(ellipse at top left, #35664b, transparent 65%), #0b342b; color: #fff7e7; scroll-margin-top: 24px; }
 .community-copy { max-width: 670px; }
 .community-section .eyebrow { color: #c8d8c3; }
