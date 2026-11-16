@@ -22,53 +22,11 @@ export function useFrequencyPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const volumeRef = useRef(.2)
   const pending = useRef(false)
+  const initialHz = useRef(hz)
+  const selectedHz = useRef(hz)
+  const sequence = useRef(false)
+  const [playingAll, setPlayingAll] = useState(false)
 
-  useEffect(() => {
-    const audio = new Audio(`/audio/solfeggio-${hz}-hz.mp3`)
-    audio.preload = 'metadata'
-    audio.volume = volumeRef.current
-    audioRef.current = audio
-    const updateTime = () => setPosition(audio.currentTime)
-    const metadata = () => {
-      if (Number.isFinite(audio.duration) && audio.duration > 0) {
-        setDuration(audio.duration)
-        setReady(true)
-      }
-    }
-    const started = () => { setPlaying(true); setLoading(false) }
-    const paused = () => { setPlaying(false); setLoading(false); pending.current = false }
-    const waiting = () => { if (!audio.paused) setLoading(true) }
-    const failed = () => { paused(); setError('This recording could not be loaded. Press play to try again.') }
-    audio.addEventListener('loadedmetadata', metadata)
-    audio.addEventListener('durationchange', metadata)
-    audio.addEventListener('timeupdate', updateTime)
-    audio.addEventListener('playing', started)
-    audio.addEventListener('pause', paused)
-    audio.addEventListener('ended', paused)
-    audio.addEventListener('waiting', waiting)
-    audio.addEventListener('error', failed)
-    const stopForMedia = (event: Event) => { if (event.target instanceof HTMLMediaElement && event.target !== audio) audio.pause() }
-    const stopOnLeave = () => audio.pause()
-    document.addEventListener('play', stopForMedia, true)
-    window.addEventListener('pagehide', stopOnLeave)
-    return () => {
-      audio.removeEventListener('loadedmetadata', metadata)
-      audio.removeEventListener('durationchange', metadata)
-      audio.removeEventListener('timeupdate', updateTime)
-      audio.removeEventListener('playing', started)
-      audio.removeEventListener('pause', paused)
-      audio.removeEventListener('ended', paused)
-      audio.removeEventListener('waiting', waiting)
-      audio.removeEventListener('error', failed)
-      document.removeEventListener('play', stopForMedia, true)
-      window.removeEventListener('pagehide', stopOnLeave)
-      audio.pause()
-      audio.removeAttribute('src')
-      audio.load()
-      audioRef.current = null
-      pending.current = false
-    }
-  }, [hz])
 
   async function toggle() {
     const audio = audioRef.current
@@ -89,9 +47,17 @@ export function useFrequencyPlayer() {
       }
     } finally { if (audioRef.current === audio) pending.current = false }
   }
-  function select(value: number) {
-    if (value === hz || !frequencies.some(f => f.hz === value)) return
-    audioRef.current?.pause()
+  function select(value: number, continueSequence = false, restart = false) {
+    if (!frequencies.some(f => f.hz === value)) return
+    const audio = audioRef.current
+    if (!audio) return
+    if (!continueSequence) { sequence.current = false; setPlayingAll(false) }
+    if (value === selectedHz.current && !restart) {
+      if (audio.paused && !pending.current) void toggle()
+      return
+    }
+    audio.pause()
+    pending.current = false
     setPlaying(false)
     setLoading(false)
     setPosition(0)
@@ -99,6 +65,17 @@ export function useFrequencyPlayer() {
     setReady(false)
     setError('')
     setHz(value)
+    selectedHz.current = value
+    audio.src = `/audio/solfeggio-${value}-hz.mp3`
+    audio.volume = volumeRef.current
+    // Start directly from the user's click, including on mobile browsers.
+    void toggle()
+  }
+  function playAll() {
+    if (sequence.current) { void toggle(); return }
+    sequence.current = true
+    setPlayingAll(true)
+    select(frequencies[0].hz, true, true)
   }
   function seek(value: number) {
     if (audioRef.current && ready) {
@@ -111,5 +88,58 @@ export function useFrequencyPlayer() {
     volumeRef.current = value / 100
     if (audioRef.current) audioRef.current.volume = volumeRef.current
   }
-  return { hz, playing, loading, position, duration, ready, volume, error, toggle, select, seek, changeVolume }
+  useEffect(() => {
+    const audio = new Audio(`/audio/solfeggio-${initialHz.current}-hz.mp3`)
+    audio.preload = 'metadata'
+    audio.volume = volumeRef.current
+    audioRef.current = audio
+    const updateTime = () => setPosition(audio.currentTime)
+    const metadata = () => {
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        setDuration(audio.duration)
+        setReady(true)
+      }
+    }
+    const started = () => { setPlaying(true); setLoading(false) }
+    const paused = () => { setPlaying(false); setLoading(false); pending.current = false }
+    const waiting = () => { if (!audio.paused) setLoading(true) }
+    const failed = () => { paused(); setError('This recording could not be loaded. Press play to try again.') }
+    const ended = () => {
+      paused()
+      const next = frequencies[frequencies.findIndex(f => f.hz === selectedHz.current) + 1]
+      if (sequence.current && next) select(next.hz, true)
+      else { sequence.current = false; setPlayingAll(false) }
+    }
+    audio.addEventListener('loadedmetadata', metadata)
+    audio.addEventListener('durationchange', metadata)
+    audio.addEventListener('timeupdate', updateTime)
+    audio.addEventListener('playing', started)
+    audio.addEventListener('pause', paused)
+    audio.addEventListener('ended', ended)
+    audio.addEventListener('waiting', waiting)
+    audio.addEventListener('error', failed)
+    const stopForMedia = (event: Event) => { if (event.target instanceof HTMLMediaElement && event.target !== audio) audio.pause() }
+    const stopOnLeave = () => audio.pause()
+    document.addEventListener('play', stopForMedia, true)
+    window.addEventListener('pagehide', stopOnLeave)
+    return () => {
+      audio.removeEventListener('loadedmetadata', metadata)
+      audio.removeEventListener('durationchange', metadata)
+      audio.removeEventListener('timeupdate', updateTime)
+      audio.removeEventListener('playing', started)
+      audio.removeEventListener('pause', paused)
+      audio.removeEventListener('ended', ended)
+      audio.removeEventListener('waiting', waiting)
+      audio.removeEventListener('error', failed)
+      document.removeEventListener('play', stopForMedia, true)
+      window.removeEventListener('pagehide', stopOnLeave)
+      audio.pause()
+      audio.removeAttribute('src')
+      audio.load()
+      audioRef.current = null
+      pending.current = false
+    }
+  }, [])
+
+  return { hz, playing, playingAll, playAll, loading, position, duration, ready, volume, error, toggle, select, seek, changeVolume }
 }

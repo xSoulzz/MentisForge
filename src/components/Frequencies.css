@@ -5,12 +5,26 @@
 .frequency-intro svg { width: 40px; height: 40px; color: var(--link); }
 .frequency-intro h2 { font: 400 23px/1.15 Georgia, serif; margin: 0; letter-spacing: -.03em; }
 .frequency-intro p { font: 12px/1.5 Arial, sans-serif; margin: 5px 0 0; }
-.frequency-options { display: grid; grid-template-columns: repeat(9,minmax(0,1fr)); gap: 6px; flex: 1; min-width: 0; }
+.frequency-options { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 6px; flex: 1; min-width: 0; }
 .frequency-options button { min-width: 0; min-height: 64px; border: 1px solid var(--tone-border); border-radius: 18px; padding: 8px 3px; color: var(--ink); background: #ffffff09; }
 .frequency-options strong { display: block; font: 600 15px/1.5 Arial, sans-serif; }
 .frequency-options span { display: block; font: 10px/1.5 Arial, sans-serif; }
 .frequency-options button[aria-pressed='true'], .frequency-list button[aria-pressed='true'] { background: linear-gradient(150deg,#34604a,#073d30); color: #fff5d7; border-color: #b9904b; box-shadow: 0 0 0 2px #ceaa6050; }
 .frequency-options button:hover { border-color: var(--gold); }
+.frequency-options .play-all { border-color: var(--gold); background: #b9904b18; }
+.frequency-strip { flex-wrap: wrap; }
+.frequency-menu-controls { display: flex; align-items: center; gap: 12px; width: 100%; padding-top: 12px; border-top: 1px solid var(--tone-border); margin-top: 4px; }
+.menu-playback-status { font: 12px/1.5 Arial, sans-serif; color: var(--tone-muted); }
+.menu-volume { display: flex; align-items: center; gap: 10px; margin-left: auto; font: 12px/1.5 Arial, sans-serif; }
+.menu-volume input { width: clamp(80px, 16vw, 180px); height: 32px; accent-color: var(--link); cursor: pointer; }
+.menu-volume output { min-width: 34px; }
+.menu-volume input:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.frequency-menu-controls > p { font: 13px/1.5 Arial, sans-serif; }
+@media(max-width:600px) {
+  .frequency-menu-controls { flex-wrap: wrap; }
+  .menu-volume { width: 100%; margin: 0; }
+  .menu-volume input { flex: 1; min-width: 0; }
+}
 .frequency-audio { padding: 24px; position: relative; overflow: hidden; }
 .frequency-audio::after { content: ''; position: absolute; width: 300px; height: 100px; border: 1px solid #ba9a5540; border-radius: 50%; right: -70px; bottom: -65px; box-shadow: 0 -10px 0 #ba9a5508, 0 -20px 0 #ba9a5508; pointer-events: none; }
 .audio-heading { display: flex; gap: 14px; align-items: center; }
@@ -61,6 +75,7 @@
   .frequency-intro svg { width: 30px; }
   .frequency-options { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .frequency-options strong { font-size: 13px; }
+  .frequency-options .play-all { grid-column: 1 / -1; min-height: 44px; }
   .frequency-audio { padding: 20px; border-radius: 14px; }
   .audio-heading h2 { font-size: 23px; }
   .frequency-hero { grid-template-columns: 1fr; padding: 28px 22px; }

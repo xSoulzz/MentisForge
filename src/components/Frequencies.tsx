@@ -12,6 +12,13 @@ export function FrequencySelector({ player }: { player: Player }) {
     <div className="frequency-intro"><WaveIcon/><div><h2 id="frequency-heading">Solfeggio Frequencies</h2><p>Select a frequency to listen</p></div></div>
     <div className="frequency-options" role="group" aria-label="Listening frequency">
       {frequencies.map(f => <button key={f.hz} aria-pressed={player.hz === f.hz} onClick={() => player.select(f.hz)}><strong>{f.hz} Hz</strong><span>{f.name}</span></button>)}
+      <button className="play-all" aria-pressed={player.playingAll} onClick={player.playAll} title="Play all nine recordings in frequency order"><strong>{player.playingAll ? player.playing || player.loading ? 'Pause all' : 'Resume all' : 'Play all'}</strong><span>9 tracks · 135 min</span></button>
+    </div>
+    <div className="frequency-menu-controls">
+      <button className="audio-play" onClick={() => void player.toggle()} aria-label={player.playing || player.loading ? 'Pause frequency recording' : 'Play frequency recording'}><span aria-hidden="true">{player.playing || player.loading ? 'Ⅱ' : '▶'}</span></button>
+      <span className="menu-playback-status" role="status">{player.loading ? 'Loading' : player.playing ? 'Playing' : 'Paused'} · {player.hz} Hz{player.playingAll && ` · ${frequencies.findIndex(f => f.hz === player.hz) + 1} / 9`}</span>
+      <label className="menu-volume"><span>Volume</span><input type="range" min="0" max="100" value={player.volume} onChange={e => player.changeVolume(Number(e.target.value))}/><output>{player.volume}%</output></label>
+      {player.error && <p role="alert">{player.error}</p>}
     </div>
   </section>
 }
