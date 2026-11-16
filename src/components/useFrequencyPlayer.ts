@@ -7,8 +7,6 @@ export const frequencies = [
   { hz: 741, name: 'Awareness' }, { hz: 852, name: 'Intuition' },
   { hz: 963, name: 'Higher Self' },
 ]
-const duration = 15 * 60
-
 export function useFrequencyPlayer() {
   const [hz, setHz] = useState(() => {
     const requested = Number(new URLSearchParams(window.location.search).get('hz'))
@@ -16,84 +14,102 @@ export function useFrequencyPlayer() {
   })
   const [playing, setPlaying] = useState(false)
   const [position, setPosition] = useState(0)
+  const [duration, setDuration] = useState(900)
+  const [ready, setReady] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [volume, setVolume] = useState(20)
   const [error, setError] = useState('')
-  const engine = useRef<{ context: AudioContext; oscillator: OscillatorNode; gain: GainNode; start: number } | null>(null)
-  const elapsed = useRef(0)
-  const active = useRef(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const volumeRef = useRef(.2)
+  const pending = useRef(false)
 
-  function pause() {
-    const audio = engine.current
-    if (audio && active.current) {
-      elapsed.current = Math.min(duration, audio.context.currentTime - audio.start)
-      audio.gain.gain.setTargetAtTime(0, audio.context.currentTime, .025)
-      setPosition(elapsed.current)
-    }
-    active.current = false
-    setPlaying(false)
-  }
-  async function toggle() {
-    if (active.current) { pause(); return }
-    try {
-      if (!engine.current) {
-        const context = new AudioContext()
-        const oscillator = context.createOscillator()
-        const gain = context.createGain()
-        oscillator.type = 'sine'
-        oscillator.frequency.value = hz
-        gain.gain.value = 0
-        oscillator.connect(gain).connect(context.destination)
-        oscillator.start()
-        engine.current = { context, oscillator, gain, start: 0 }
+  useEffect(() => {
+    const audio = new Audio(`/audio/solfeggio-${hz}-hz.mp3`)
+    audio.preload = 'metadata'
+    audio.volume = volumeRef.current
+    audioRef.current = audio
+    const updateTime = () => setPosition(audio.currentTime)
+    const metadata = () => {
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        setDuration(audio.duration)
+        setReady(true)
       }
-      const audio = engine.current
-      await audio.context.resume()
+    }
+    const started = () => { setPlaying(true); setLoading(false) }
+    const paused = () => { setPlaying(false); setLoading(false); pending.current = false }
+    const waiting = () => { if (!audio.paused) setLoading(true) }
+    const failed = () => { paused(); setError('This recording could not be loaded. Press play to try again.') }
+    audio.addEventListener('loadedmetadata', metadata)
+    audio.addEventListener('durationchange', metadata)
+    audio.addEventListener('timeupdate', updateTime)
+    audio.addEventListener('playing', started)
+    audio.addEventListener('pause', paused)
+    audio.addEventListener('ended', paused)
+    audio.addEventListener('waiting', waiting)
+    audio.addEventListener('error', failed)
+    const stopForMedia = (event: Event) => { if (event.target instanceof HTMLMediaElement && event.target !== audio) audio.pause() }
+    const stopOnLeave = () => audio.pause()
+    document.addEventListener('play', stopForMedia, true)
+    window.addEventListener('pagehide', stopOnLeave)
+    return () => {
+      audio.removeEventListener('loadedmetadata', metadata)
+      audio.removeEventListener('durationchange', metadata)
+      audio.removeEventListener('timeupdate', updateTime)
+      audio.removeEventListener('playing', started)
+      audio.removeEventListener('pause', paused)
+      audio.removeEventListener('ended', paused)
+      audio.removeEventListener('waiting', waiting)
+      audio.removeEventListener('error', failed)
+      document.removeEventListener('play', stopForMedia, true)
+      window.removeEventListener('pagehide', stopOnLeave)
+      audio.pause()
+      audio.removeAttribute('src')
+      audio.load()
+      audioRef.current = null
+      pending.current = false
+    }
+  }, [hz])
+
+  async function toggle() {
+    const audio = audioRef.current
+    if (!audio) return
+    if (!audio.paused || pending.current) { audio.pause(); pending.current = false; setLoading(false); return }
+    pending.current = true
+    setLoading(true)
+    setError('')
+    try {
+      if (audio.error) audio.load()
+      if (audio.ended) audio.currentTime = 0
       document.querySelectorAll('video, audio').forEach(media => (media as HTMLMediaElement).pause())
-      if (elapsed.current >= duration) elapsed.current = 0
-      audio.start = audio.context.currentTime - elapsed.current
-      audio.oscillator.frequency.setTargetAtTime(hz, audio.context.currentTime, .03)
-      audio.gain.gain.setTargetAtTime(volume / 100 * .2, audio.context.currentTime, .08)
-      active.current = true
-      setPlaying(true)
-      setError('')
-    } catch { setError('Audio could not start. Please try again in a browser that supports Web Audio.') }
+      await audio.play()
+    } catch (failure) {
+      if (audioRef.current === audio && !(failure instanceof DOMException && failure.name === 'AbortError')) {
+        setError('Playback could not start. Please press play to try again.')
+        setLoading(false)
+      }
+    } finally { if (audioRef.current === audio) pending.current = false }
   }
   function select(value: number) {
-    pause()
-    elapsed.current = 0
+    if (value === hz || !frequencies.some(f => f.hz === value)) return
+    audioRef.current?.pause()
+    setPlaying(false)
+    setLoading(false)
     setPosition(0)
+    setDuration(900)
+    setReady(false)
+    setError('')
     setHz(value)
   }
   function seek(value: number) {
-    elapsed.current = value
-    setPosition(value)
-    if (engine.current) engine.current.start = engine.current.context.currentTime - value
-    if (value >= duration) pause()
+    if (audioRef.current && ready) {
+      audioRef.current.currentTime = Math.max(0, Math.min(value, duration))
+      setPosition(audioRef.current.currentTime)
+    }
   }
   function changeVolume(value: number) {
     setVolume(value)
-    if (engine.current && active.current) engine.current.gain.gain.setTargetAtTime(value / 100 * .2, engine.current.context.currentTime, .03)
+    volumeRef.current = value / 100
+    if (audioRef.current) audioRef.current.volume = volumeRef.current
   }
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      const audio = engine.current
-      if (!audio || !active.current) return
-      elapsed.current = Math.min(duration, audio.context.currentTime - audio.start)
-      setPosition(elapsed.current)
-      if (elapsed.current >= duration) pause()
-    }, 250)
-    const stopForMedia = (event: Event) => { if (event.target instanceof HTMLMediaElement) pause() }
-    document.addEventListener('play', stopForMedia, true)
-    const stopOnLeave = () => pause()
-    window.addEventListener('pagehide', stopOnLeave)
-    return () => {
-      clearInterval(timer)
-      document.removeEventListener('play', stopForMedia, true)
-      window.removeEventListener('pagehide', stopOnLeave)
-      const audio = engine.current
-      engine.current = null
-      if (audio) { audio.oscillator.stop(); void audio.context.close() }
-    }
-  }, [])
-  return { hz, playing, position, volume, error, toggle, select, seek, changeVolume }
+  return { hz, playing, loading, position, duration, ready, volume, error, toggle, select, seek, changeVolume }
 }
