@@ -7,7 +7,7 @@ export const frequencies = [
   { hz: 741, name: 'Awareness' }, { hz: 852, name: 'Intuition' },
   { hz: 963, name: 'Higher Self' },
 ]
-export function useFrequencyPlayer() {
+export function useFrequencyPlayer(enabled = true) {
   const [hz, setHz] = useState(() => {
     const requested = Number(new URLSearchParams(window.location.search).get('hz'))
     return frequencies.some(f => f.hz === requested) ? requested : 528
@@ -89,6 +89,7 @@ export function useFrequencyPlayer() {
     if (audioRef.current) audioRef.current.volume = volumeRef.current
   }
   useEffect(() => {
+    if (!enabled) return
     const audio = new Audio(`/audio/solfeggio-${initialHz.current}-hz.mp3`)
     audio.preload = 'metadata'
     audio.volume = volumeRef.current
@@ -139,7 +140,7 @@ export function useFrequencyPlayer() {
       audioRef.current = null
       pending.current = false
     }
-  }, [])
+  }, [enabled])
 
   return { hz, playing, playingAll, playAll, loading, position, duration, ready, volume, error, toggle, select, seek, changeVolume }
 }

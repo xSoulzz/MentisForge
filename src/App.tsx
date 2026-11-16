@@ -22,7 +22,7 @@ import selfMasteryText from './content/self-mastery.md?raw'
 import growthChangeText from './content/growth-change.md?raw'
 import deeperLibraryText from './content/deeper-library.md?raw'
 import './App.css'
-import { FrequencyAudio, FrequencyPage, FrequencySelector } from './components/Frequencies'
+import { FrequencyAudio, FrequencyPage } from './components/Frequencies'
 import { useFrequencyPlayer } from './components/useFrequencyPlayer'
 import './FrequencyLayout.css'
 
@@ -66,7 +66,7 @@ function Sun() { return <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="
 function Moon() { return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M21 3A13 13 0 1 0 29 23 11 11 0 0 1 21 3Z"/></svg> }
 
 function App() {
-  const frequencyPlayer = useFrequencyPlayer()
+  const frequencyPlayer = useFrequencyPlayer(isFrequencyPage || !isArticle)
   const [copyrightYear] = useState(() => new Date().getFullYear())
   const [theme, setTheme] = useState<'light' | 'dark'>(() => { try { return localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light' } catch { return 'light' } })
   const [menuOpen, setMenuOpen] = useState(false)
@@ -118,7 +118,6 @@ function App() {
     </header>
     <main id="main-content" tabIndex={-1}>
       {isFrequencyPage ? <FrequencyPage player={frequencyPlayer}/> : isTerms ? <Terms/> : currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
-      <FrequencySelector player={frequencyPlayer}/>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
           <p className="eyebrow">Neuroscience · Psychology · Possibility</p>

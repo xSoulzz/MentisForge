@@ -45,6 +45,7 @@
   .learning-audio-layout .audio-controls { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
   .learning-audio-layout .audio-volume { grid-column: 2; grid-row: 3; }
   .learning-audio-layout .frequency-learn { grid-column: 2; grid-row: 4; }
+  .learning-audio-layout .audio-selection { grid-column: 1; grid-row: 4; }
   .learning-audio-layout .learning-section { padding: 8px 0 16px; background: none; }
   .learning-audio-layout .learning-card { display: flex; padding: 22px; }
   .learning-audio-layout .learning-card svg { margin: 0; }
