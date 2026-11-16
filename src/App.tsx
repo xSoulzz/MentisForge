@@ -6,6 +6,7 @@ import libraryArtwork from './assets/inner-library-detailed.png'
 import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
 import reflectionVideoArtwork from './assets/watch-reflection.png'
 import Article from './pages/Article'
+import VideoPlayer from './components/VideoPlayer'
 import Terms from './pages/Terms'
 import AdultNeuroplasticityAnswer from './pages/AdultNeuroplasticityAnswer'
 import HabitsAnswer from './pages/HabitsAnswer'
@@ -202,10 +203,7 @@ function App() {
             { key: 'ReflectionVideo', src: '/videos/carl-jung-know-yourself.mp4', image: reflectionVideoArtwork, title: 'Symbols, reflection & the inner life', description: 'Carl Jung — Know Yourself. A reflection on self-knowledge and the inner life.' },
           ] as const).map(video => <article className="watch-card" key={video.key}>
             <div className="watch-video-card">
-              <video className="watch-video" controls playsInline preload="none" poster={video.image} aria-labelledby={`${video.key}-title`}>
-                <source src={video.src} type="video/mp4"/>
-                Your browser does not support embedded video. <a href={video.src}>Open the video</a>.
-              </video>
+              <VideoPlayer src={video.src} poster={video.image} title={video.title} titleId={`${video.key}-title`}/>
               <div className="watch-copy"><h3 className="watch-title" id={`${video.key}-title`}>{video.title}</h3><p className="watch-description">{video.description}</p></div>
             </div>
           </article>)}
