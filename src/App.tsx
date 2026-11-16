@@ -108,7 +108,7 @@ function App() {
     <header className="site-header">
       <div className="header-content">
         <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">The science of a more capable mind</span></span></a>
-        <nav className="desktop-nav" aria-label="Main navigation">{navigation}</nav>
+        <nav className="desktop-nav" aria-label="Main navigation">{navigation}<a className="nav-link desktop-frequency-link" href={`/frequencies/?hz=${frequencyPlayer.hz}`} aria-current={isFrequencyPage ? 'page' : undefined}>Frequencies</a></nav>
         <button className="theme-toggle" role="switch" aria-checked={theme === 'dark'} aria-label="Dark mode" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}><span className={theme === 'light' ? 'theme-option active' : 'theme-option'}><Sun/></span><span className={theme === 'dark' ? 'theme-option active' : 'theme-option'}><Moon/></span></button>
         <button ref={menuButton} className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="header-menu" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
       </div>
