@@ -1,0 +1,68 @@
+/* The frequency edition keeps the existing content and gives the first screen
+   a listening sidebar on desktop and a deliberate stacked flow on touch screens. */
+.landing-shell:not(.article-shell) { max-width: 1440px; margin: 20px auto; border: 1px solid var(--edge); border-radius: 22px; box-shadow: 0 8px 28px #00000012; }
+.learning-audio-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; padding: 22px 0; border-bottom: 1px solid var(--edge); }
+.learning-audio-layout .frequency-audio { grid-column: 2; grid-row: 1; }
+.learning-audio-layout .learning-section { grid-column: 1; grid-row: 1; padding: 12px 20px 24px; border: 0; border-radius: 16px; background: #b68e4910; }
+.learning-audio-layout .learning-section h2 { font-size: clamp(28px,2.6vw,36px); }
+.learning-audio-layout .learning-grid { gap: 12px; }
+.learning-audio-layout .learning-card { display: block; padding: 18px; box-shadow: 0 4px 8px #00000010; }
+.learning-audio-layout .learning-card svg { margin-bottom: 10px; }
+.learning-audio-layout .learning-card h3 { font-size: 21px; }
+.learning-audio-layout .learning-card p { font-size: 14px; }
+.topics-questions-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 30px; padding: 26px 8px; border-bottom: 1px solid var(--edge); align-items: start; }
+.topics-questions-layout .topics-section { padding: 0; }
+.topics-questions-layout .topic-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px 0; }
+.topics-questions-layout .topic-card { padding: 0 24px; }
+.topics-questions-layout .topic-card:nth-child(odd) { border-left: 0; padding-left: 0; }
+.topics-questions-layout .topic-card:nth-child(n+3) { border-top: 0; }
+.topics-questions-layout .questions-section { padding: 0 0 0 26px; margin: 0; border: 0; border-left: 1px solid var(--edge); border-radius: 0; background: none; }
+:root[data-theme='light'] .topics-questions-layout .questions-section { background: none; }
+.topics-questions-layout .questions-section h2 { font-size: 29px; }
+.topics-questions-layout .faq-list { background: transparent; padding: 0; }
+.topics-questions-layout .faq-item { border: 1px solid var(--edge); border-radius: 12px; margin-bottom: 8px; padding-inline: 14px; }
+.topics-questions-layout .faq-item summary { grid-template-columns: minmax(0,1fr) 24px; padding: 12px 0; gap: 6px 12px; }
+.topics-questions-layout .faq-item .category-label { border: 0; padding: 0; grid-column: 1; font-size: 11px; }
+.topics-questions-layout .faq-question { grid-column: 1; font-size: 18px; line-height: 1.3; }
+.topics-questions-layout .faq-symbol { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.topics-questions-layout .faq-answer { margin: 0; padding: 8px 0 18px; }
+.topics-questions-layout .faq-answer .faq-long-answer p { font-size: 15px; }
+.community-section { min-height: 160px; }
+@media(min-width:1101px) {
+  .hero { position: relative; isolation: isolate; min-height: 340px; }
+  .hero::before { content: ''; position: absolute; z-index: -1; inset: 0 0 0 42%; background: linear-gradient(90deg,var(--surface),transparent 50%),url('./assets/inner-library-detailed.png') center/cover; opacity: .18; }
+  .hero .eyebrow { display: none; }
+  .hero h1 { font-size: clamp(40px,3.5vw,54px); }
+  .hero-art { max-height: 330px; }
+  .hero-art img { max-height: 330px; }
+}
+@media(max-width:1100px) {
+  .landing-shell:not(.article-shell) { margin: 10px auto; border-radius: 16px; }
+  .learning-audio-layout { display: flex; flex-direction: column; gap: 20px; }
+  .learning-audio-layout > * { width: 100%; }
+  .learning-audio-layout .frequency-audio { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+  .learning-audio-layout .audio-heading, .learning-audio-layout .frequency-audio > p { grid-column: 1; }
+  .learning-audio-layout .audio-controls { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+  .learning-audio-layout .audio-volume { grid-column: 2; grid-row: 3; }
+  .learning-audio-layout .frequency-learn { grid-column: 2; grid-row: 4; }
+  .learning-audio-layout .learning-section { padding: 8px 0 16px; background: none; }
+  .learning-audio-layout .learning-card { display: flex; padding: 22px; }
+  .learning-audio-layout .learning-card svg { margin: 0; }
+  .topics-questions-layout { grid-template-columns: 1fr; gap: 28px; padding-inline: 0; }
+  .topics-questions-layout .questions-section { border: 0; padding: 0; }
+  .topics-questions-layout .faq-item summary { grid-template-columns: 24% minmax(0,1fr) 24px; align-items: center; }
+  .topics-questions-layout .faq-question { grid-column: 2; }
+  .topics-questions-layout .faq-symbol { grid-column: 3; grid-row: 1; }
+}
+@media(max-width:600px) {
+  .landing-shell:not(.article-shell) { margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+  .learning-audio-layout .frequency-audio { display: block; }
+  .learning-audio-layout .audio-controls { margin-top: 16px; }
+  .learning-audio-layout .learning-card { padding: 20px; }
+  .topics-questions-layout .topic-grid { grid-template-columns: 1fr; gap: 0; }
+  .topics-questions-layout .topic-card, .topics-questions-layout .topic-card:nth-child(odd) { padding: 14px 12px; border-left: 0; }
+  .topics-questions-layout .topic-card + .topic-card { border-top: 1px solid var(--edge); }
+  .topics-questions-layout .faq-item summary { grid-template-columns: minmax(0,1fr) 24px; min-height: 56px; }
+  .topics-questions-layout .faq-question { grid-column: 1; font-size: 19px; }
+  .topics-questions-layout .faq-symbol { grid-column: 2; }
+}

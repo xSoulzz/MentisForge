@@ -22,6 +22,9 @@ import selfMasteryText from './content/self-mastery.md?raw'
 import growthChangeText from './content/growth-change.md?raw'
 import deeperLibraryText from './content/deeper-library.md?raw'
 import './App.css'
+import { FrequencyAudio, FrequencyPage, FrequencySelector } from './components/Frequencies'
+import { useFrequencyPlayer } from './components/useFrequencyPlayer'
+import './FrequencyLayout.css'
 
 const articleRoutes = {
   DeeperLibrary: { path: '/pathways/deeper-library/', category: 'The Deeper Library', text: deeperLibraryText },
@@ -36,6 +39,7 @@ const articleRoutes = {
 const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '')
 const currentArticle = Object.values(articleRoutes).find(article => article.path.slice(0, -1) === currentPath)
 const isTerms = currentPath === '/terms'
+const isFrequencyPage = currentPath === '/frequencies'
 const isArticle = Boolean(currentArticle) || isTerms
 
 const information = {
@@ -62,6 +66,7 @@ function Sun() { return <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="
 function Moon() { return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M21 3A13 13 0 1 0 29 23 11 11 0 0 1 21 3Z"/></svg> }
 
 function App() {
+  const frequencyPlayer = useFrequencyPlayer()
   const [copyrightYear] = useState(() => new Date().getFullYear())
   const [theme, setTheme] = useState<'light' | 'dark'>(() => { try { return localStorage.getItem('mentis-theme') === 'dark' ? 'dark' : 'light' } catch { return 'light' } })
   const [menuOpen, setMenuOpen] = useState(false)
@@ -109,7 +114,8 @@ function App() {
       {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
     </header>
     <main id="main-content" tabIndex={-1}>
-      {isTerms ? <Terms/> : currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
+      {isFrequencyPage ? <FrequencyPage player={frequencyPlayer}/> : isTerms ? <Terms/> : currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
+      <FrequencySelector player={frequencyPlayer}/>
       <section className="hero" aria-labelledby="hero-heading">
         <div className="hero-copy">
           <p className="eyebrow">Neuroscience · Psychology · Possibility</p>
@@ -119,6 +125,8 @@ function App() {
         </div>
         <div className="hero-art"><img src={heroArtwork} width="1619" height="971" fetchPriority="high" alt="Ivory anatomical brain beneath a classical gold arch, with branching golden neurons on either side."/></div>
       </section>
+      <div className="learning-audio-layout">
+      <FrequencyAudio player={frequencyPlayer}/>
       <section id="learning" className="learning-section" aria-labelledby="learning-heading">
         <p className="eyebrow">The four learning pillars</p>
         <h2 id="learning-heading">Core pathways for a more capable mind</h2>
@@ -131,6 +139,8 @@ function App() {
           ].map(pillar => <a className="learning-card" key={pillar.title} href={pillar.href}><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d={pillar.icon}/></svg><div><h3>{pillar.title}</h3><p>{pillar.text}</p></div></a>)}
         </div>
       </section>
+      </div>
+      <div className="topics-questions-layout">
       <section id="topics" className="topics-section" aria-labelledby="topics-heading">
         <h2 id="topics-heading">Explore topics</h2>
         <div className="topic-grid">
@@ -159,6 +169,7 @@ function App() {
           </details>)}
         </div>
       </section>
+      </div>
       <section id="reading" className="reading-section" aria-labelledby="reading-heading">
         <h2 id="reading-heading">Latest reading</h2>
         <div className="reading-list">
@@ -185,16 +196,16 @@ function App() {
         <h2 id="watch-heading">Watch &amp; explore</h2>
         <div className="watch-grid">
           {([
-            { key: 'NeuroVideo', image: neuroVideoArtwork, title: 'Neuroplasticity & intentional practice', description: 'How repetition, attention, and environment shape learning.' },
-            { key: 'ReflectionVideo', image: reflectionVideoArtwork, title: 'Symbols, reflection & the inner life', description: 'A guided look at contemplative traditions and personal meaning.' },
+            { key: 'NeuroVideo', src: '/videos/neuroplasticity-intentional-practice.mp4', image: neuroVideoArtwork, title: 'Neuroplasticity & intentional practice', description: 'How repetition, attention, and environment shape learning.' },
+            { key: 'ReflectionVideo', src: '/videos/carl-jung-know-yourself.mp4', image: reflectionVideoArtwork, title: 'Symbols, reflection & the inner life', description: 'Carl Jung — Know Yourself. A reflection on self-knowledge and the inner life.' },
           ] as const).map(video => <article className="watch-card" key={video.key}>
-            <button className="watch-trigger" aria-label={`${video.title}: video coming soon, view details`} aria-haspopup="dialog" onClick={() => showTopic(video.key)}>
-              <span className="watch-thumbnail">
-                <img src={video.image} alt="" loading="lazy" decoding="async"/>
-                <span className="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></svg></span>
-              </span>
-              <span className="watch-copy"><span className="watch-title">{video.title}</span><span className="watch-description">{video.description}</span><span className="watch-status">Video coming soon</span></span>
-            </button>
+            <div className="watch-video-card">
+              <video className="watch-video" controls playsInline preload="none" poster={video.image} aria-labelledby={`${video.key}-title`}>
+                <source src={video.src} type="video/mp4"/>
+                Your browser does not support embedded video. <a href={video.src}>Open the video</a>.
+              </video>
+              <div className="watch-copy"><h3 className="watch-title" id={`${video.key}-title`}>{video.title}</h3><p className="watch-description">{video.description}</p></div>
+            </div>
           </article>)}
         </div>
       </section>
@@ -255,6 +266,7 @@ function App() {
         <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Discord <span className="sr-only">(opens in a new tab)</span></a>
         <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span className="sr-only">(opens in a new tab)</span></a>
         <a href="/#library">The Inner Library</a>
+        <a href="/frequencies/">Solfeggio Frequencies</a>
       </nav>
       <nav className="footer-column" aria-labelledby="footer-information">
         <h2 id="footer-information">Information</h2>
