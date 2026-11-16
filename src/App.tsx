@@ -111,7 +111,10 @@ function App() {
         <button className="theme-toggle" role="switch" aria-checked={theme === 'dark'} aria-label="Dark mode" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}><span className={theme === 'light' ? 'theme-option active' : 'theme-option'}><Sun/></span><span className={theme === 'dark' ? 'theme-option active' : 'theme-option'}><Moon/></span></button>
         <button ref={menuButton} className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="header-menu" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
       </div>
-      {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">{navigation}</nav>}
+      {menuOpen && <nav id="header-menu" className="header-menu" aria-label="Mobile navigation">
+        {navigation}
+        <a className="nav-link" href={`/frequencies/?hz=${frequencyPlayer.hz}`} onClick={() => setMenuOpen(false)}>Frequencies</a>
+      </nav>}
     </header>
     <main id="main-content" tabIndex={-1}>
       {isFrequencyPage ? <FrequencyPage player={frequencyPlayer}/> : isTerms ? <Terms/> : currentArticle ? <Article text={currentArticle.text} category={currentArticle.category} pathway={currentArticle === articleRoutes.MindBrain ? '01' : currentArticle === articleRoutes.SelfMastery ? '02' : currentArticle === articleRoutes.GrowthChange ? '03' : currentArticle === articleRoutes.DeeperLibrary ? '04' : undefined}/> : <>
