@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import heroArtwork from './assets/forge-hero-light.png'
-import darkHeroArtwork from './assets/forge-hero-dark.png'
-import noaPortrait from './assets/noa-portrait.png'
-import brandonPortrait from './assets/brandon-portrait.png'
-import libraryArtwork from './assets/inner-library-detailed.png'
-import neuroVideoArtwork from './assets/watch-neuroplasticity.png'
-import reflectionVideoArtwork from './assets/watch-reflection.png'
+import heroArtwork from './assets/forge-hero-light.webp'
+import darkHeroArtwork from './assets/forge-hero-dark.webp'
+import heroArtworkSmall from './assets/forge-hero-light-960.webp'
+import darkHeroArtworkSmall from './assets/forge-hero-dark-960.webp'
+import noaPortrait from './assets/noa-portrait.webp'
+import brandonPortrait from './assets/brandon-portrait.webp'
+import libraryArtwork from './assets/inner-library-detailed.webp'
+import neuroVideoArtwork from './assets/watch-neuroplasticity.webp'
+import reflectionVideoArtwork from './assets/watch-reflection.webp'
 import Article from './pages/Article'
 import VideoPlayer from './components/VideoPlayer'
 import Terms from './pages/Terms'
@@ -128,7 +130,7 @@ function App() {
           <p className="hero-description">Evidence-based insights from neuroscience and psychology on how the brain learns, adapts, and grows — so you can think clearer, build better habits, and create a more meaningful next chapter.</p>
           <a className="hero-cta" href="/#topics">Explore the research <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div className="hero-art"><img src={theme === 'dark' ? darkHeroArtwork : heroArtwork} width="2172" height="724" fetchPriority="high" loading="eager" alt="A glowing neural brain above an iron anvil in a stone-arched workshop."/></div>
+        <div className="hero-art"><img src={theme === 'dark' ? darkHeroArtwork : heroArtwork} srcSet={theme === 'dark' ? `${darkHeroArtworkSmall} 960w, ${darkHeroArtwork} 1920w` : `${heroArtworkSmall} 960w, ${heroArtwork} 1920w`} sizes="(max-width: 700px) 190vw, (max-width: 1300px) 100vw, 1280px" width="1920" height="640" fetchPriority="high" loading="eager" decoding="async" alt="A glowing neural brain above an iron anvil in a stone-arched workshop."/></div>
       </section>
       <div className="learning-audio-layout">
       <FrequencyAudio player={frequencyPlayer}/>

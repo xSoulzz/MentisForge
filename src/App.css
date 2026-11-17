@@ -518,7 +518,7 @@ a.text-link { display: inline-flex; align-items: center; gap: 5px; }
 .theme-option.active { background: var(--surface); color: var(--gold); box-shadow: 0 1px 4px #0001; }
 .theme-option svg { width: 21px; height: 21px; }
 .community-section { position: relative; isolation: isolate; overflow: hidden; }
-.community-section::before { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, #0b342bc9, #0b342bf2 28%, #0b342bfa 75%, #0b342bc9), url('./assets/inner-library-detailed.png') center / cover; }
+.community-section::before { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, #0b342bc9, #0b342bf2 28%, #0b342bfa 75%, #0b342bc9), url('./assets/inner-library-detailed.webp') center / cover; }
 @media (min-width: 601px) and (max-width: 1100px) {
   .landing-shell { padding-inline: clamp(28px, 5.5vw, 56px); }
   .header-content { gap: 16px; min-height: 76px; }

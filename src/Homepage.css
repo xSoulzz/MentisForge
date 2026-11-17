@@ -1,4 +1,4 @@
-﻿/* Homepage composition: scoped so article and frequency layouts remain independent. */
+/* Homepage composition: scoped so article and frequency layouts remain independent. */
 .homepage-shell.landing-shell { --surface:#fcf4e5; --ink:#20281e; --muted:#414438; --gold:#9b652e; --link:#163f32; --edge:#cbbda1; max-width:1280px; padding:0 56px; margin:24px auto; border-radius:16px; background:radial-gradient(ellipse at 20% 30%,#fffaf0,transparent 65%),var(--surface); box-shadow:0 12px 32px #332b2426; }
 :root[data-theme='dark'] .homepage-shell { --surface:#0b1612; --ink:#f7e7c7; --muted:#dedbcb; --gold:#e3b76f; --link:#f1d7a2; --edge:#69735c; background:radial-gradient(ellipse at 60% 40%,#1c2a20,transparent 65%),var(--surface); }
 .homepage-shell .header-content { min-height:66px; gap:26px; border:0; }
@@ -93,7 +93,7 @@
 .homepage-shell .person-card { padding-left:24px; gap:18px; align-items:center; }
 .homepage-shell .profile-portrait { width:72px; height:72px; border-radius:8px; }
 .homepage-shell .person-card h3 { font:bold 19px Georgia,serif; border:0; margin:0; }
-.homepage-shell .community-section { min-height:100px; margin:12px -36px 8px; padding:18px 32px; gap:20px; border:1px solid #778f72; background:radial-gradient(ellipse at 30% 0%,#56715a99,transparent 65%),linear-gradient(110deg,#102f25e8,#072b21ed),url('./assets/inner-library-detailed.png') center/cover; }
+.homepage-shell .community-section { min-height:100px; margin:12px -36px 8px; padding:18px 32px; gap:20px; border:1px solid #778f72; background:radial-gradient(ellipse at 30% 0%,#56715a99,transparent 65%),linear-gradient(110deg,#102f25e8,#072b21ed),url('./assets/inner-library-detailed.webp') center/cover; }
 .homepage-shell .community-section .eyebrow { display:none; }
 .homepage-shell .community-section h2 { font-size:28px; margin-bottom:6px; }
 .homepage-shell .community-copy > p:last-child { font:12px/1.4 Arial,sans-serif; max-width:530px; }
@@ -210,5 +210,5 @@
  .homepage-shell .menu-toggle { width:34px; }
  .homepage-shell .hero h1 { font-size:32px; }
 }
-.homepage-shell .community-section { background:linear-gradient(90deg,#092c20b8,#092c2066),url('./assets/community-forest.png') center 45%/cover; }
+.homepage-shell .community-section { background:linear-gradient(90deg,#092c20b8,#092c2066),url('./assets/community-forest.webp') center 45%/cover; }
 .homepage-shell .community-section::before { display:none; }

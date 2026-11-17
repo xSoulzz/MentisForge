@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import './EmotionalMap.css'
-import reflectivePortrait from '../assets/reflective-portrait.png'
+import reflectivePortrait from '../assets/reflective-portrait.webp'
 
 const states = [
   ['Enlightenment', '700+', '#175650'], ['Peace', '600', '#1c6359'],
