@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import heroArtwork from './assets/mentis-hero-v2.png'
+import heroArtwork from './assets/forge-hero-light.png'
+import darkHeroArtwork from './assets/forge-hero-dark.png'
 import noaPortrait from './assets/noa-portrait.png'
 import brandonPortrait from './assets/brandon-portrait.png'
 import libraryArtwork from './assets/inner-library-detailed.png'
@@ -26,6 +27,7 @@ import './App.css'
 import { FrequencyAudio, FrequencyPage } from './components/Frequencies'
 import { useFrequencyPlayer } from './components/useFrequencyPlayer'
 import './FrequencyLayout.css'
+import './Homepage.css'
 
 const articleRoutes = {
   DeeperLibrary: { path: '/pathways/deeper-library/', category: 'The Deeper Library', text: deeperLibraryText },
@@ -103,11 +105,11 @@ function App() {
     <a className="nav-link" href="/#about" onClick={() => setMenuOpen(false)}>About</a>
     <a className="nav-link" href="/#community" onClick={() => setMenuOpen(false)}>Community</a>
   </>
-  return <div className={`landing-shell${isArticle ? ' article-shell' : ''}`}>
+  return <div className={`landing-shell${isArticle ? ' article-shell' : ''}${!isArticle && !isFrequencyPage ? ' homepage-shell' : ''}`}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <header className="site-header">
       <div className="header-content">
-        <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">The science of a more capable mind</span></span></a>
+        <a className="brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">Neuroscience × Psychology × Personal Growth</span></span></a>
         <nav className="desktop-nav" aria-label="Main navigation">{navigation}<a className="nav-link desktop-frequency-link" href={`/frequencies/?hz=${frequencyPlayer.hz}`} aria-current={isFrequencyPage ? 'page' : undefined}>Frequencies</a></nav>
         <button className="theme-toggle" role="switch" aria-checked={theme === 'dark'} aria-label="Dark mode" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}><span className={theme === 'light' ? 'theme-option active' : 'theme-option'}><Sun/></span><span className={theme === 'dark' ? 'theme-option active' : 'theme-option'}><Moon/></span></button>
         <button ref={menuButton} className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="header-menu" onClick={() => setMenuOpen(!menuOpen)}><span/><span/></button>
@@ -123,10 +125,10 @@ function App() {
         <div className="hero-copy">
           <p className="eyebrow">Neuroscience · Psychology · Possibility</p>
           <h1 id="hero-heading">Understand your mind.<br/>Build your next chapter.</h1>
-          <p className="hero-description">Evidence-based insights from neuroscience and psychology on how the brain learns, adapts, and finds meaning in everyday life.</p>
+          <p className="hero-description">Evidence-based insights from neuroscience and psychology on how the brain learns, adapts, and grows — so you can think clearer, build better habits, and create a more meaningful next chapter.</p>
           <a className="hero-cta" href="/#topics">Explore the research <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div className="hero-art"><img src={heroArtwork} width="1619" height="971" fetchPriority="high" alt="Ivory anatomical brain beneath a classical gold arch, with branching golden neurons on either side."/></div>
+        <div className="hero-art"><img src={theme === 'dark' ? darkHeroArtwork : heroArtwork} width="2172" height="724" fetchPriority="high" loading="eager" alt="A glowing neural brain above an iron anvil in a stone-arched workshop."/></div>
       </section>
       <div className="learning-audio-layout">
       <FrequencyAudio player={frequencyPlayer}/>
@@ -214,17 +216,17 @@ function App() {
         <div className="study-grid">
           <article className="study-pillar">
             <svg className="study-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="m31 9 8-5 14 21-8 5ZM28 12l-5 4 9 14 5-4M34 31l-4 3M18 38h24M26 42h14M44 29c13 8 8 25-7 25H20M26 54v5M14 59h38"/><path d="M26 29c-12 1-15 14-8 21M38 10l5-3"/><circle cx="44" cy="35" r="3"/></svg>
-            <h3>Research</h3>
+            <h3>Research-Led</h3>
             <p className="study-description">Start with evidence. Ask how a finding was studied and what its limits are.</p>
           </article>
           <article className="study-pillar">
             <svg className="study-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 15C24 9 14 8 6 11v39c9-3 18-2 26 4 8-6 17-7 26-4V11c-8-3-18-2-26 4Zm0 0v39M11 15v30c7-1 13 0 17 3M53 15v30c-7-1-13 0-17 3"/></svg>
-            <h3>Interpretation</h3>
+            <h3>Evidence-Informed</h3>
             <p className="study-description">Explore meaning with care. Distinguish evidence from perspective and tradition.</p>
           </article>
           <article className="study-pillar">
             <svg className="study-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 57V33M32 42C32 20 44 10 58 10c0 16-8 28-26 28M32 33C30 14 19 8 6 10c0 15 9 25 26 23M32 38l17-19M31 33 15 18"/></svg>
-            <h3>Practice</h3>
+            <h3>Practice-Oriented</h3>
             <p className="study-description">Bring ideas into daily life. Observe, reflect, and adjust with curiosity.</p>
           </article>
         </div>
@@ -245,8 +247,8 @@ function App() {
           <p>Thoughtful reading, new research highlights, and conversations about the science of a more capable mind.</p></div>
         <div className="about-community">
           <nav aria-label="Join the Mentis Forge community">
-            <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Join us on Discord <span aria-hidden="true">&#8599;</span></a>
-            <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Skool <span aria-hidden="true">&#8599;</span></a>
+            <a href="https://discord.gg/K9RKgcu7UC" target="_blank" rel="noreferrer">Join Discord <span aria-hidden="true">→</span></a>
+            <a href="https://www.skool.com/" target="_blank" rel="noreferrer">Explore Skool <span aria-hidden="true">→</span></a>
           </nav>
         </div>
       </section>
@@ -254,6 +256,13 @@ function App() {
     </main>
     <footer className="site-footer" aria-label="Site footer">
       <a className="brand footer-brand" href="/" aria-label="Mentis Forge home"><Emblem/><span className="brand-copy"><span className="brand-name">Mentis Forge</span><span className="tagline">Neuroscience + Psychology</span></span></a>
+      {!isArticle && !isFrequencyPage ? <nav className="compact-footer-nav" aria-label="Footer navigation">
+        <a href="/#topics">Explore</a><a href="/#community">Community</a>
+        <button onClick={() => showTopic('Privacy')} aria-haspopup="dialog">Privacy</button>
+        <a href="/terms/">Terms</a>
+        <button onClick={() => showTopic('Accessibility')} aria-haspopup="dialog">Accessibility</button>
+        <button onClick={() => showTopic('Contact')} aria-haspopup="dialog">Contact</button>
+      </nav> : <>
       <nav className="footer-column" aria-labelledby="footer-explore">
         <h2 id="footer-explore">Explore</h2>
         <a href="/#topics">Topics</a>
@@ -272,6 +281,7 @@ function App() {
         <h2 id="footer-information">Information</h2>
         {(['Contact', 'Privacy', 'Terms', 'Accessibility'] as const).map(item => item === 'Terms' ? <a key={item} href="/terms/" aria-current={isTerms ? 'page' : undefined}>Terms</a> : <button key={item} onClick={() => showTopic(item)} aria-haspopup="dialog">{item}</button>)}
       </nav>
+      </>}
       <div className="footer-note">
         <p>Mentis Forge provides educational content and does not offer medical diagnosis or treatment.</p>
         <p className="copyright">&copy; {copyrightYear} Mentis Forge</p>
